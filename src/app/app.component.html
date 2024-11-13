@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<div class="bg-neutral-900 text-neutral-200 min-h-screen flex flex-col">
+  <app-navbar></app-navbar>
+
+  <div class="flex flex-grow ml-64 pt-16">
+    <app-sidebar></app-sidebar>
+    <main class="p-4 flex-grow">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
