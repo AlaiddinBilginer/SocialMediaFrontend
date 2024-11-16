@@ -9,7 +9,9 @@
   </div>
 
   <div class="flex items-center space-x-3">
-    <button class="text-white bg-sky-700 hover:bg-sky-800 px-3 py-2 text-center rounded-full text-sm font-semibold">
+    <button 
+      (click)="toggleLoginModal()"
+      class="text-white bg-sky-700 hover:bg-sky-800 px-3 py-2 text-center rounded-full text-sm font-semibold">
       Giriş Yap
     </button>
 
@@ -47,3 +49,7 @@
     </div>
   </div>
 </nav>
+
+@if (isLoginModalOpen) {
+  <app-login-modal (close)="toggleLoginModal()"></app-login-modal>
+}
