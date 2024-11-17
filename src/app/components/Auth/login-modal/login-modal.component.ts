@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 
@@ -14,7 +14,7 @@ export class LoginModalComponent implements OnInit {
   isRegisterModalOpen = false;
   isLoginModalOpen = true;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private cdr: ChangeDetectorRef) {}
   
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({

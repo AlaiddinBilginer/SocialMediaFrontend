@@ -1,6 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { matchPassword, passwordValidator } from './register.validators';
+import { AuthService } from '../../../services/auth/auth.service';
+import { RegisterRequest } from '../../../contracts/auth/register-request';
+import { NotificationIconType, NotificationPositionType, NotificationService } from '../../../services/common/notification.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-register-modal',
@@ -13,7 +17,10 @@ export class RegisterModalComponent implements OnInit {
   registerForm!: FormGroup
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private notificationService: NotificationService,
+    private ngxSpinnerService: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +40,37 @@ export class RegisterModalComponent implements OnInit {
   @Output() switchToLogin = new EventEmitter<void>();
 
   onRegister() {
-    
+    this.ngxSpinnerService.show();
+    const registerRequest: RegisterRequest = this.registerForm.value;
+
+    this.authService.register(registerRequest).subscribe({
+      next: (response) => {
+        this.ngxSpinnerService.hide();
+        if(response.succeeded)
+          this.closeModal();
+        this.notificationService.showNotification(
+          response.message,
+          response.succeeded ? "Kayıt Başarılı" : "Kayıt Başarısız",
+          {
+            notificationIconType: response.succeeded 
+            ? NotificationIconType.Success : NotificationIconType.Error,
+            notificationPositionType: NotificationPositionType.BottomEnd,
+          }
+        );
+      },
+      error: (err) => {
+        this.ngxSpinnerService.hide();
+        console.log(err);
+        this.notificationService.showNotification(
+          "Bir hata oluştu, lütfen tekrar deneyin.",
+          "Hata",
+          {
+            notificationIconType: NotificationIconType.Error,
+            notificationPositionType: NotificationPositionType.BottomEnd,
+          }
+        );
+      },
+    });
   }
 
   closeModal() {
