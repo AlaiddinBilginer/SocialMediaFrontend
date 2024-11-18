@@ -9,44 +9,54 @@
   </div>
 
   <div class="flex items-center space-x-3">
-    <button 
-      (click)="toggleLoginModal()"
-      class="text-white bg-sky-700 hover:bg-sky-800 px-3 py-2 text-center rounded-full text-sm font-semibold">
-      Giriş Yap
-    </button>
-
     <button class="flex items-center rounded-full px-2 py-1 hover:bg-neutral-800 space-x-2">
       <fa-icon [icon]="faPlus" class="text-xl"></fa-icon>
       <span class="font-thin">Oluştur</span>
     </button>
+
+    <button 
+      (click)="toggleLoginModal()"
+      class="text-white bg-sky-700 hover:bg-sky-800 px-3 py-2 text-center rounded-full text-sm 
+      font-semibold">
+      Giriş Yap
+    </button>
     
-    <div class="relative">
-      <button (click)="isOpen = !isOpen" class="flex items-center space-x-2 focus:outline-none">
-        <img src="https://via.placeholder.com/30" alt="User" class="h-8 w-8 rounded-full">
-      </button>
-      @if (isOpen) {
-        <div class="absolute right-0 mt-2 w-48 bg-neutral-800 rounded-md shadow-lg overflow-hidden z-20">
-          <a 
-            routerLink="/profile" 
-            class="flex items-center space-x-2 px-4 py-2 hover:bg-neutral-700 transition"
-          >
-            <fa-icon [icon]="faUser" class="text-neutral-400"></fa-icon>
-            <span>Profili Görüntüle</span>
-          </a>
-          <a 
-            routerLink="/settings" 
-            class="flex items-center space-x-2 px-4 py-2 hover:bg-neutral-700 transition"
-          >
-            <fa-icon [icon]="faCog" class="text-neutral-400"></fa-icon>
-            <span>Ayarlar</span>
-          </a>
-          <a class="flex items-center space-x-2 px-4 py-2 hover:bg-neutral-700 transition cursor-pointer">
-            <fa-icon [icon]="faSignOutAlt" class="text-neutral-400"></fa-icon>
-            <span>Çıkış Yap</span>
-          </a>
-        </div>
-      }
-    </div>
+    @if (identityService.isAuthenticated) {
+      <div class="relative dropdown-container">
+        <button 
+          (click)="toggleDropdown()" 
+          class="flex items-center space-x-2 focus:outline-none dropdown-button"
+        >
+          <img [src]="identityService.getProfilePhoto() ?? 'null-profil-photo.png'" alt="User" 
+          class="h-10 w-10 rounded-full shadow-md hover:scale-105 transition-transform duration-200">
+        </button>
+        @if (isOpen) {
+          <div class="absolute right-0 mt-2 w-48 bg-neutral-800 rounded-md shadow-lg overflow-hidden z-20">
+            <a 
+              routerLink="/profile" 
+              class="flex items-center space-x-2 px-4 py-2 hover:bg-neutral-700 transition"
+            >
+              <fa-icon [icon]="faUser" class="text-neutral-400"></fa-icon>
+              <span>Profili Görüntüle</span>
+            </a>
+            <a 
+              routerLink="/settings" 
+              class="flex items-center space-x-2 px-4 py-2 hover:bg-neutral-700 transition"
+            >
+              <fa-icon [icon]="faCog" class="text-neutral-400"></fa-icon>
+              <span>Ayarlar</span>
+            </a>
+            <a
+              (click)="signOut()" 
+              class="flex items-center space-x-2 px-4 py-2 hover:bg-neutral-700 transition cursor-pointer"
+            >
+              <fa-icon [icon]="faSignOutAlt" class="text-neutral-400"></fa-icon>
+              <span>Çıkış Yap</span>
+            </a>
+          </div>
+        }
+      </div>
+    }
   </div>
 </nav>
 

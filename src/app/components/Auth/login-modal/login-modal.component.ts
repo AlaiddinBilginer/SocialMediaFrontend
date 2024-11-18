@@ -9,6 +9,7 @@ import { LoginResponse } from '../../../contracts/auth/login-response';
 import { ResponseModel } from '../../../contracts/common/response-model';
 import { LocalStorageService } from '../../../services/common/local-storage.service';
 import { Token } from '../../../models/token';
+import { IdentityService } from '../../../services/auth/identity.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -27,8 +28,11 @@ export class LoginModalComponent implements OnInit {
     private authService: AuthService,
     private notificationService: NotificationService,
     private ngxSpinnerService: NgxSpinnerService,
-    private localStorageService: LocalStorageService
-  ) {}
+    private localStorageService: LocalStorageService,
+    private identityService: IdentityService
+  ) {
+    identityService.checkIdentity();
+  }
   
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -54,9 +58,10 @@ export class LoginModalComponent implements OnInit {
           this.closeModal();
           const token: Token = response.token;
           this.localStorageService.set('accessToken', token.accessToken);
-          this.notificationService.showNotification(response.message, "Giriş Başarılı", {
+          this.identityService.checkIdentity();
+          this.notificationService.showNotification(response.message + '. Hoş geldin :)', "Giriş Başarılı", {
             notificationIconType: NotificationIconType.Success,
-            notificationPositionType: NotificationPositionType.TopEnd
+            notificationPositionType: NotificationPositionType.Center
           });
         } else {
           this.ngxSpinnerService.hide();
