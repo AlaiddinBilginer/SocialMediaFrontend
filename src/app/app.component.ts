@@ -4,6 +4,7 @@ import { NavbarComponent } from "./shared/components/navbar/navbar.component";
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { NgxSpinnerModule } from 'ngx-spinner'
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -12,5 +13,4 @@ import { NgxSpinnerModule } from 'ngx-spinner'
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  username = "Alaiddin";
 }

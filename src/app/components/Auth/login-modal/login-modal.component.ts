@@ -5,8 +5,6 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { LoginRequest } from '../../../contracts/auth/login-request';
 import { NotificationIconType, NotificationPositionType, NotificationService } from '../../../services/common/notification.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { LoginResponse } from '../../../contracts/auth/login-response';
-import { ResponseModel } from '../../../contracts/common/response-model';
 import { LocalStorageService } from '../../../services/common/local-storage.service';
 import { Token } from '../../../models/token';
 import { IdentityService } from '../../../services/auth/identity.service';
@@ -29,7 +27,7 @@ export class LoginModalComponent implements OnInit {
     private notificationService: NotificationService,
     private ngxSpinnerService: NgxSpinnerService,
     private localStorageService: LocalStorageService,
-    private identityService: IdentityService
+    private identityService: IdentityService,
   ) {
     identityService.checkIdentity();
   }

@@ -9,17 +9,21 @@
   </div>
 
   <div class="flex items-center space-x-3">
-    <button class="flex items-center rounded-full px-2 py-1 hover:bg-neutral-800 space-x-2">
+    <button 
+      routerLink="gonderi-paylas"
+      class="flex items-center rounded-full px-2 py-1 hover:bg-neutral-800 space-x-2">
       <fa-icon [icon]="faPlus" class="text-xl"></fa-icon>
       <span class="font-thin">Oluştur</span>
     </button>
 
-    <button 
-      (click)="toggleLoginModal()"
-      class="text-white bg-sky-700 hover:bg-sky-800 px-3 py-2 text-center rounded-full text-sm 
-      font-semibold">
-      Giriş Yap
-    </button>
+    @if (!identityService.isAuthenticated) {
+      <button 
+        (click)="toggleLoginModal()"
+        class="text-white bg-sky-700 hover:bg-sky-800 px-3 py-2 text-center rounded-full text-sm 
+        font-semibold">
+        Giriş Yap
+      </button>
+    }
     
     @if (identityService.isAuthenticated) {
       <div class="relative dropdown-container">
