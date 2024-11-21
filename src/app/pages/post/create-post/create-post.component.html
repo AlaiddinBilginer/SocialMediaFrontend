@@ -1,1 +1,38 @@
-<p>create-post works!</p>
+<div class="max-w-3xl rounded-lg shadow-lg p-6 ml-16">
+  <h2 class="text-2xl font-bold mb-6 text-slate-300">Gönderi Oluştur</h2>
+  <form [formGroup]="createPostForm" (ngSubmit)="onCreate()">
+    <input 
+      type="text" 
+      id="title" 
+      formControlName="title"
+      placeholder="Başlık" 
+      class="w-full px-4 py-2 border border-gray-600 bg-neutral-900 rounded-2xl text-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-300 mb-4">
+
+    <textarea 
+      id="content" 
+      formControlName="content"
+      placeholder="İçerik" 
+      rows="3"
+      class="w-full px-4 py-2 border border-gray-600 bg-neutral-900 rounded-2xl text-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-300 mb-4"></textarea>
+
+    <label for="category" class="block text-lg font-medium mb-3">Kategori</label>
+    <select 
+      id="category" 
+      formControlName="categoryId"
+      class="w-full px-4 py-2 border border-gray-600 bg-neutral-900 rounded-lg text-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-300 mb-6 custom-select">
+      @for (category of categories; track $index) {
+        <option [value]="category.id">{{ category.title }}</option>
+    }
+    </select>
+
+    <div class="flex justify-end">
+      <button 
+        type="submit" 
+        class="text-white bg-sky-700 hover:bg-sky-800 px-3 py-2 text-center rounded-2xl text-sm 
+        font-semibold"
+        [disabled]="createPostForm.invalid">
+        Gönder
+      </button>
+    </div>
+  </form>
+</div>
