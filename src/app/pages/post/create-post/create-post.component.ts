@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CreatePostRequest } from '../../../contracts/posts/create-post-request';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PostService } from '../../../services/models/post.service';
@@ -6,11 +6,12 @@ import { NotificationIconType, NotificationPositionType, NotificationService } f
 import { ListCategoryResponse } from '../../../contracts/categories/list-category-response';
 import { CategoryService } from '../../../services/models/category.service';
 import { Router } from '@angular/router';
+import { PostPhotoUploadComponent } from '../../../components/post-photo-upload/post-photo-upload.component';
 
 @Component({
   selector: 'app-create-post',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, PostPhotoUploadComponent],
   templateUrl: './create-post.component.html',
   styleUrl: './create-post.component.css'
 })
@@ -18,6 +19,7 @@ export class CreatePostComponent implements OnInit {
   createPostForm!: FormGroup;
   categories: ListCategoryResponse[] = [];
   isLoaded: boolean = false;
+  files: File[] = [];
 
   constructor(
     private postService: PostService,
@@ -34,12 +36,14 @@ export class CreatePostComponent implements OnInit {
       categoryId: ['', Validators.required]
     });
     this.getCategories();
-    console.log(this.categories);
   }
 
   onCreate() {
-    const createPostRequest: CreatePostRequest = this.createPostForm.value;
-    console.log(createPostRequest);
+    console.log(this.files);
+    const createPostRequest: CreatePostRequest = {
+      ...this.createPostForm.value,
+      files: this.files
+    };
     this.postService.create(createPostRequest).subscribe({
       next: (response) => {
         this.notificationService.showNotification(response.message, response.succeeded ? 'Gönderi Paylaşıldı': 'Gönderi Paylaşılmadı', {
@@ -62,7 +66,6 @@ export class CreatePostComponent implements OnInit {
   getCategories() {
     this.categoryService.getAll().subscribe({
       next: (response) => {
-        console.log(response);
         this.categories = response.categories;
       },
       error: (err) => {
@@ -70,5 +73,9 @@ export class CreatePostComponent implements OnInit {
       }
     });
     this.isLoaded = true;
+  }
+
+  onFilesChanges(files: File[]) {
+    this.files = files;
   }
 }

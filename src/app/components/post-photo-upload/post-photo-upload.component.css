@@ -1,0 +1,8 @@
+.abc {
+  background-color: #171717;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.abc:hover {
+  background-color: #0a0a0a;
+}

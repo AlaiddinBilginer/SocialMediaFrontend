@@ -25,13 +25,15 @@
     }
     </select>
 
+    <app-post-photo-upload (filesChanges)="onFilesChanges($event)"></app-post-photo-upload>
+
     <div class="flex justify-end">
       <button 
         type="submit" 
         class="text-white bg-sky-700 hover:bg-sky-800 px-3 py-2 text-center rounded-2xl text-sm 
         font-semibold"
         [disabled]="createPostForm.invalid">
-        Gönder
+        Paylaş
       </button>
     </div>
   </form>
