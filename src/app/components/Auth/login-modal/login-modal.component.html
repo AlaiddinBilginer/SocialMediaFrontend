@@ -1,57 +1,68 @@
 @if (isLoginModalOpen) {
-<div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" (click)="closeModal()">
-  <div class="bg-neutral-900 p-12 rounded-md max-w-md" (click)="$event.stopPropagation()">
-    <h2 class="text-xl font-bold text-white mb-6 text-center">Giriş Yap</h2>
-    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="space-y-4">
-      <input
-        formControlName="userNameOrEmail"
-        type="text"
-        placeholder="Kullanıcı adı veya e-posta"
-        name="username"
-        required
-        class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700"
-      />
-      @if (loginForm.get('userNameOrEmail')?.invalid && loginForm.get('userNameOrEmail')?.touched) {
-        <div class="text-red-500 text-xs">Kulanıcı adı veya e-posta zorunludur.</div>
-      }
-
-      <input
-        formControlName="password"
-        type="password"
-        placeholder="Şifre"
-        name="password"
-        required
-        class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700"
-      />
-      @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-        <div class="text-red-500 text-xs">
-          Şifre zorunludur.
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" (click)="closeModal()">
+    <div
+      class="bg-neutral-900 p-8 sm:p-12 rounded-lg max-w-md w-full shadow-lg transform transition-all duration-300 hover:scale-105"
+      (click)="$event.stopPropagation()"
+    >
+      <h2 class="text-2xl font-bold text-white mb-6 text-center">Giriş Yap</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="space-y-5">
+        <div>
+          <input
+            formControlName="userNameOrEmail"
+            type="text"
+            placeholder="Kullanıcı adı veya e-posta"
+            name="username"
+            required
+            class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700 border border-neutral-700"
+          />
+          @if (loginForm.get('userNameOrEmail')?.invalid && loginForm.get('userNameOrEmail')?.touched) {
+            <div class="text-red-500 text-xs mt-1">Kullanıcı adı veya e-posta zorunludur.</div>
+          }
         </div>
-      }
-      <button
-        type="submit"
-        class="w-full bg-gradient-to-r from-sky-500 via-sky-600 to-sky-700 hover:from-sky-600 hover:to-sky-800 px-4 py-3 rounded-md text-white font-semibold tracking-wide transition-all duration-300"
-        [disabled]="loginForm.invalid">
-        Giriş Yap
-      </button>
-    </form>
-    <div class="flex flex-col items-center gap-2 mt-5 text-sm text-neutral-400">
-      <a class="hover:font-semibold cursor-pointer">Şifreni mi unuttun?</a>
-      <p>SosyalPortal'da yeni misin? 
-        <a 
-          (click)="toggleRegisterModal()"
-          class="text-sky-500 hover:font-semibold hover:text-sky-400 cursor-pointer">
-          Kayıt Ol
-        </a>
-      </p>
+  
+        <div>
+          <input
+            formControlName="password"
+            type="password"
+            placeholder="Şifre"
+            name="password"
+            required
+            class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700 border border-neutral-700"
+          />
+          @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+            <div class="text-red-500 text-xs mt-1">Şifre zorunludur.</div>
+          }
+        </div>
+  
+        <button
+          type="submit"
+          class="w-full bg-gradient-to-r from-sky-500 via-sky-600 to-sky-700 hover:from-sky-600 hover:to-sky-800 px-4 py-3 rounded-md text-white font-semibold tracking-wide transition-all duration-300 shadow-lg"
+          [disabled]="loginForm.invalid"
+        >
+          Giriş Yap
+        </button>
+      </form>
+  
+      <div class="flex flex-col items-center gap-2 mt-6 text-sm text-neutral-400">
+        <a class="hover:font-semibold cursor-pointer transition-all hover:text-neutral-200">Şifreni mi unuttun?</a>
+        <p>
+          SosyalPortal'da yeni misin?
+          <a
+            (click)="toggleRegisterModal()"
+            class="text-sky-500 hover:font-semibold hover:text-sky-400 cursor-pointer transition-all"
+          >
+            Kayıt Ol
+          </a>
+        </p>
+      </div>
     </div>
   </div>
-</div>
-}
-
-@if (isRegisterModalOpen) {
-  <app-register-modal 
-    (close)="closeModal()"
-    (switchToLogin)="showLoginModal()">
-  </app-register-modal>
-}
+  }
+  
+  @if (isRegisterModalOpen) {
+    <app-register-modal
+      (close)="closeModal()"
+      (switchToLogin)="showLoginModal()"
+    ></app-register-modal>
+  }
+  

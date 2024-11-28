@@ -1,24 +1,39 @@
-<aside class="bg-neutral-900 text-neutral-300 w-64 p-4 flex flex-col space-y-6 h-full border-e border-gray-700 overflow-y-auto fixed top-16 left-0 bottom-0">
+<aside class="bg-neutral-900 text-neutral-300 w-64 p-6 flex flex-col space-y-8 h-full border-e border-gray-700 overflow-y-auto fixed top-16 left-0 bottom-0 shadow-lg">
   <div>
-    <ul class="space-y-2">
+    <ul class="space-y-3">
       <li>
-        <a routerLink="akis" class="block px-2 py-1 rounded-md hover:bg-neutral-800 flex space-x-2">
-          <fa-icon [icon]="'home'"></fa-icon>
-          <span>Akış</span>
+        <a routerLink="akis" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 transition duration-300">
+          <fa-icon [icon]="'home'" class="text-gray-200"></fa-icon>
+          <span class="text-sm font-medium">Akış</span>
         </a>
       </li>
       <li>
-        <a href="#" class="block px-2 py-1 rounded-md hover:bg-neutral-800 flex space-x-2">
-          <fa-icon [icon]="'compass'" class="w-4 h-4"></fa-icon>
-          <span>Keşfet</span>
+        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 transition duration-300">
+          <fa-icon [icon]="'compass'" class="text-gray-200"></fa-icon>
+          <span class="text-sm font-medium">Keşfet</span>
         </a>
       </li>
       <li>
-        <a href="#" class="block px-2 py-1 rounded-md hover:bg-neutral-800 flex space-x-2">
-          <fa-icon [icon]="'fire'" class="w-4 h-4"></fa-icon>
-          <span>Popüler</span>
+        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 transition duration-300">
+          <fa-icon [icon]="'fire'" class="text-gray-200"></fa-icon>
+          <span class="text-sm font-medium">Popüler</span>
         </a>
       </li>
+    </ul>
+  </div>
+
+  <div>
+    <p class="text-sm font-semibold text-neutral-400 uppercase tracking-wide pb-3 border-b border-neutral-600">
+      Kategoriler
+    </p>
+    <ul class="space-y-3 mt-4">
+      @for (category of categories; track $index) {
+        <li>
+          <a [routerLink]="['/gonderiler/kategori', category.title]" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 transition duration-300">
+            <span class="text-sm font-medium">{{ category.title }}</span>
+          </a>
+        </li>
+      }
     </ul>
   </div>
 </aside>

@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '../environments/environment';
 import { authInterceptor } from './interceptors/auth.interceptor';
+import { DatePipe } from '@angular/common';
 
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
           allowedDomains: [environment.apiUrl]
         }
       })
-    ])
+    ]),
+    DatePipe
   ]
 };

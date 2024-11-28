@@ -6,7 +6,7 @@ import { NotificationIconType, NotificationPositionType, NotificationService } f
 import { ListCategoryResponse } from '../../../contracts/categories/list-category-response';
 import { CategoryService } from '../../../services/models/category.service';
 import { Router } from '@angular/router';
-import { PostPhotoUploadComponent } from '../../../components/post-photo-upload/post-photo-upload.component';
+import { PostPhotoUploadComponent } from '../../../components/Posts/post-photo-upload/post-photo-upload.component';
 
 @Component({
   selector: 'app-create-post',

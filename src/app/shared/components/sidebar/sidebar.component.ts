@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faHome, faCompass, faFire } from '@fortawesome/free-solid-svg-icons';
+import { CategoryService } from '../../../services/models/category.service';
+import { ListCategoryResponse } from '../../../contracts/categories/list-category-response';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,11 +14,19 @@ import { faHome, faCompass, faFire } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  faHome = faHome;
-  faCompass = faCompass;
-  faFire = faFire;
+  categories: ListCategoryResponse[] = [];
 
-  constructor(library: FaIconLibrary) {
+  constructor(
+    library: FaIconLibrary,
+    private categoryService: CategoryService
+  ) {
     library.addIcons(faHome, faCompass, faFire);
+    this.getCategories();
+  }
+
+  getCategories() {
+    this.categoryService.getAll().subscribe((data) => {
+      this.categories = data.categories;
+    });
   }
 }

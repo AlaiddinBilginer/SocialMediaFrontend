@@ -10,7 +10,7 @@
 }
 
 .dark-theme-popup .swal2-title {
-  color: #ffcc00 !important;
+  color: #ffd427 !important;
 }
 
 .dark-theme-popup .swal2-icon {
@@ -29,7 +29,7 @@
 }
 
 .small-modal {
-  max-width: 300px !important;
+  max-width: 400px !important;
   padding: 1rem !important;
   font-size: 0.9rem !important;
 }

@@ -1,53 +1,63 @@
 <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" (click)="closeModal()">
-  <div class="bg-neutral-900 p-12 rounded-md max-w-md" (click)="$event.stopPropagation()">
-    <h2 class="text-xl font-bold text-white mb-6 text-center">Kayıt Ol</h2>
-    <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-4">
-      <input
-        formControlName="email"
-        type="email"
-        placeholder="E-posta"
-        class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700"
-      />
-      @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-        <div class="text-red-600 text-xs">Lütfen geçerli bir e-posta adresi giriniz.</div>
-      }
-
-      <input
-        formControlName="userName"
-        type="text"
-        placeholder="Kullanıcı Adı"
-        class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700"
-      />
-      @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
-        <div class="text-red-600 text-xs">Kullanıcı adı en az 5 en fazla 50 karakter olmalıdır.</div>
-      }
-
-      <input
-        formControlName="fullName"
-        type="text"
-        placeholder="Tam Ad"
-        class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700"
-      />
-      @if (registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched) {
-        <div class="text-red-600 text-xs">Tam ad en az 5 en fazla 50 karakter olmalıdır.</div>
-      }
-
-      <input
-        formControlName="password"
-        type="password"
-        placeholder="Şifre"
-        class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700"
-      />
-      @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-        @if (registerForm.get('password')?.errors?.['minlength']) {
-          <div class="text-red-600 text-xs">Şifre en az 8 karakter olmalıdır.</div>
+  <div
+    class="bg-neutral-900 p-8 sm:p-12 rounded-lg max-w-md w-full shadow-xl transform transition-all duration-300 hover:scale-105"
+    (click)="$event.stopPropagation()"
+  >
+    <h2 class="text-2xl font-bold text-white mb-6 text-center">Kayıt Ol</h2>
+    
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-5">
+      <div>
+        <input
+          formControlName="email"
+          type="email"
+          placeholder="E-posta"
+          class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700 border border-neutral-700"
+        />
+        @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+          <div class="text-red-500 text-xs mt-1">Lütfen geçerli bir e-posta adresi giriniz.</div>
         }
-        @if (registerForm.get('password')?.errors?.['maxlength']) {
-          <div class="text-red-600 text-xs">Şifre en fazla 50 karakter olmalıdır.</div>
+      </div>
+
+      <div>
+        <input
+          formControlName="userName"
+          type="text"
+          placeholder="Kullanıcı Adı"
+          class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700 border border-neutral-700"
+        />
+        @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
+          <div class="text-red-500 text-xs mt-1">Kullanıcı adı en az 5 en fazla 50 karakter olmalıdır.</div>
         }
-        @if (registerForm.get('password')?.errors?.['passwordStrength']) {
-          <div class="text-red-600 text-xs">
+      </div>
+
+      <div>
+        <input
+          formControlName="fullName"
+          type="text"
+          placeholder="Tam Ad"
+          class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700 border border-neutral-700"
+        />
+        @if (registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched) {
+          <div class="text-red-500 text-xs mt-1">Tam ad en az 5 en fazla 50 karakter olmalıdır.</div>
+        }
+      </div>
+
+      <div>
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="Şifre"
+          class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700 border border-neutral-700"
+        />
+        @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+          <div class="text-red-500 text-xs mt-1">
             <ul>
+              @if (registerForm.get('password')?.errors?.['minlength']) {
+                <li>Şifre en az 8 karakter olmalıdır.</li> 
+              }
+              @if (registerForm.get('password')?.errors?.['maxlength']) {
+                <li>Şifre en fazla 50 karakter olmalıdır.</li>
+              } 
               @if (!registerForm.get('password')?.errors?.['passwordStrength']?.hasUpperCase) {
                 <li>En az bir büyük harf içermelidir.</li>
               }
@@ -63,30 +73,35 @@
             </ul>
           </div>
         }
-      }
+      </div>
 
-      <input
-        formControlName="confirmPassword"
-        type="password"
-        placeholder="Şifreyi Onayla"
-        class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700"
-      />
-      @if (registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched) {
-        <div class="text-red-600 text-xs">Şifreler uyuşmuyor.</div>
-      }
+      <div>
+        <input
+          formControlName="confirmPassword"
+          type="password"
+          placeholder="Şifreyi Onayla"
+          class="w-full px-4 py-3 rounded-md bg-neutral-800 text-neutral-300 focus:ring-2 focus:ring-sky-700 border border-neutral-700"
+        />
+        @if (registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched) {
+          <div class="text-red-500 text-xs mt-1">Şifreler uyuşmuyor.</div>
+        }
+      </div>
 
       <button
         type="submit"
-        class="w-full bg-gradient-to-r from-sky-500 via-sky-600 to-sky-700 hover:from-sky-600 hover:to-sky-800 px-4 py-3 rounded-md text-white font-semibold tracking-wide transition-all duration-300"
-        [disabled]="registerForm.invalid">
+        class="w-full bg-gradient-to-r from-sky-500 via-sky-600 to-sky-700 hover:from-sky-600 hover:to-sky-800 px-4 py-3 rounded-md text-white font-semibold tracking-wide transition-all duration-300 shadow-lg"
+        [disabled]="registerForm.invalid"
+      >
         Kayıt Ol
       </button>
     </form>
-    <div class="flex flex-col items-center gap-2 mt-5 text-sm text-neutral-400">
+
+    <div class="flex flex-col items-center gap-2 mt-6 text-sm text-neutral-400">
       <p>Zaten bir hesabın var mı?
-        <a 
+        <a
           (click)="navigateToLogin()"
-          class="text-sky-500 hover:font-semibold hover:text-sky-400 cursor-pointer">
+          class="text-sky-500 hover:font-semibold hover:text-sky-400 cursor-pointer transition-all"
+        >
           Giriş Yap
         </a>
       </p>

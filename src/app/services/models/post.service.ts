@@ -3,6 +3,7 @@ import { HttpClientService } from '../common/http-client.service';
 import { CreatePostRequest } from '../../contracts/posts/create-post-request';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../../contracts/common/response-model';
+import { Post } from '../../models/post';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,22 @@ export class PostService {
       controller: 'posts',
       action: 'create'
     }, formData);
+  }
+
+  getPosts(page: number = 0, size: number = 8) : Observable<{ totalPostCount: number, posts: Post[] }> {
+    return this.httpClientService.get<{ totalPostCount: number, posts: Post[] }>({
+      controller: 'posts',
+      action: 'getPostsByUser',
+      queryString: `Pagination.Page=${page}&Pagination.Size=${size}`
+    });
+  }
+
+  getPostsByCategory(categoryName: string, page: number = 0, size: number = 8) 
+  : Observable<{ totalPostCount: number, posts: Post[] }> {
+    return this.httpClientService.get<{ totalPostCount: number, posts: Post[] }>({
+      controller: 'posts',
+      action: 'getPostsByCategory',
+      queryString: `Pagination.Page=${page}&Pagination.Size=${size}&CategoryName=${categoryName}`
+    });
   }
 }
