@@ -4,6 +4,7 @@ import { CreatePostRequest } from '../../contracts/posts/create-post-request';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../../contracts/common/response-model';
 import { Post } from '../../models/post';
+import { PostDetailResponse } from '../../contracts/posts/post-detail-response';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,14 @@ export class PostService {
       controller: 'posts',
       action: 'getPostsByCategory',
       queryString: `Pagination.Page=${page}&Pagination.Size=${size}&CategoryName=${categoryName}`
+    });
+  }
+
+  getPostById(postId: string) : Observable<PostDetailResponse> {
+    return this.httpClientService.get<PostDetailResponse>({
+      controller: 'posts',
+      action: 'getById',
+      queryString: `id=${postId}`
     });
   }
 }

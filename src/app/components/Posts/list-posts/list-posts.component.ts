@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Post } from '../../../models/post';
 import { TimeAgo } from '../../../pipes/time-ago.pipe';
 import { RouterModule } from '@angular/router';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,6 +17,8 @@ export class ListPostsComponent{
   @Input() totalPostCount!: number;
   @Input() posts: Post[] = [];
   currentIndex = 0;
+  faHeart = faHeart;
+  faComment = faComment;
 
   constructor(
     library: FaIconLibrary

@@ -1,0 +1,74 @@
+<div 
+  class="bg-neutral-900 max-w-3xl shadow rounded-lg mb-6 ml-12 p-4 border-b border-neutral-500"
+>
+  <div class="flex justify-between items-center">
+    <div class="flex items-center mb-4">
+      @if (post.userProfilePhoto) {
+        <a routerLink="">
+          <img 
+            [src]="post.userProfilePhoto" 
+            alt="{{ post.userName }}" 
+            class="w-8 h-8 object-cover rounded-full"
+          />
+        </a>
+      } @else {
+        <div>
+          <a routerLink="">
+            <div class="w-8 h-8 bg-neutral-600 rounded-full flex items-center justify-center">
+              <span class="text-sm font-bold text-gray-200">{{ post.userName[0] }}</span>
+            </div>
+          </a>
+        </div>
+      }
+      <div class="flex items-center">
+        <a routerLink="" class="hover:underline">
+          <p class="font-semibold text-sm text-gray-300 ml-2">{{ post.userName }}</p>
+        </a>
+        <p class="text-xs text-zinc-400 ml-2">{{ post.createdDate | timeAgo }}</p>
+      </div>
+    </div>
+    <a 
+      [routerLink]="['/gonderiler/kategori', post.categoryName]" 
+    >
+      <span class="inline-block bg-neutral-700 opacity-90 text-gray-100 text-xs font-medium rounded-full px-3 py-1 hover:bg-neutral-600">
+        {{ post.categoryName }}
+      </span>
+    </a>
+  </div>
+  @if (post.title) {
+    <h2 class="text-lg font-bold mb-2">{{ post.title }}</h2>
+  }
+  @if (post.postImages.length > 0) {
+    <div class="mb-2 flex justify-center overflow-hidden cursor-default">
+      @for (image of post.postImages; track $index) {
+        <img 
+          [src]="image.path" 
+          alt="Post Image" 
+          class="object-cover rounded-lg w-full transform transition duration-500 
+          hover:scale-105"
+        />
+      }
+    </div>
+  }
+  <p class="text-gray-200 mb-4">{{ post.content }}</p>        
+  <div class="flex gap-5 items-center mt-6 text-gray-400">
+    <button 
+    class="flex items-center space-x-1 transition bg-neutral-700 px-2 rounded-full text-gray-200 hover:text-red-400 hover:bg-neutral-600"
+    (click)="$event.stopPropagation()"
+  >
+    <fa-icon [icon]="faHeart" class="text-lg"></fa-icon>
+    <span class="ml-1 text-xs rounded-full px-2 py-0.5 font-bold">
+      30
+    </span>
+  </button>
+
+  <button 
+    class="flex items-center space-x-1 text-gray-200 bg-neutral-700 hover:text-sky-400 transition px-2 rounded-full hover:bg-neutral-600"
+  >
+    <fa-icon [icon]="faComment" class="text-lg"></fa-icon>
+    <span class="ml-1 text-xs font-bold rounded-full px-2 py-0.5">
+      25
+    </span>
+  </button>
+  </div>
+</div>  

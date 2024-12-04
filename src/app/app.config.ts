@@ -2,12 +2,13 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '../environments/environment';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { DatePipe } from '@angular/common';
+import { httpErrorInterceptor } from './interceptors/http-error.interceptor';
 
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
@@ -16,9 +17,9 @@ export function tokenGetter() {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
-    provideRouter(routes), 
+    provideRouter(routes),
     provideHttpClient(
-      withInterceptors([authInterceptor])
+      withInterceptors([authInterceptor, httpErrorInterceptor])
     ),
     importProvidersFrom([
       BrowserAnimationsModule,
