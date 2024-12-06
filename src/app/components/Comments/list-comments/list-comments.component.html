@@ -1,0 +1,116 @@
+<div class="comments-container space-y-6 mt-8">
+  @for (comment of comments; track $index) {
+    <div [class]="'comment flex space-x-4 bg-neutral-900 p-4 rounded-xl border ' + (identityService.getUserId() === comment.userId ? 'border-red-800' : 'border-neutral-700')">
+
+      <div class="comment-body flex-1">
+        <div class="comment-header flex items-center space-x-2">
+          <img 
+            [src]="comment.userProfilePhoto" 
+            alt="User Avatar" 
+            class="w-8 h-8 rounded-full"
+          />
+          <span class="text-gray-200 text-xm font-medium hover:underline cursor-pointer">{{ comment.userName }}</span>
+          <span class="text-neutral-500 text-sm">{{ comment.createdDate | timeAgo }}</span>
+        </div>
+        @if (editingCommentId !== comment.id) {
+          <p class="text-neutral-200 mt-2">
+            {{ comment.content }}
+          </p>
+        } @else {
+          <form 
+          [formGroup]="commentForm"
+          (ngSubmit)="updateComment()"
+          class="bg-neutral-900 p-4"
+        >
+          <div class="flex-1 relative">
+            <textarea 
+              #commentInput
+              formControlName="content" 
+              id="comment" 
+              rows="3" 
+              maxlength="500"
+              class="w-full bg-neutral-800 text-neutral-200 rounded-xl border border-neutral-600 p-4 focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none" 
+              placeholder="Yorumunuzu buraya yazın..."
+            ></textarea>
+            
+            <div 
+              class="absolute bottom-2 right-4 text-sm text-neutral-400"
+            >
+              {{ commentInput.value.length }}/500
+            </div>
+          </div>
+          
+          <div class="flex justify-end mt-3">
+            <button 
+              type="button"
+              (click)="cancelEdit()"
+              class="bg-yellow-600 text-white px-4 py-2 rounded-xl font-medium hover:bg-yellow-700 transition duration-200"
+            >
+              İptal
+            </button>
+            <button 
+            type="submit" 
+            class="bg-indigo-600 text-white px-4 py-2 rounded-xl font-medium hover:bg-indigo-700 transition duration-200 ml-2"
+            [disabled]="commentForm.invalid"
+          >
+            Kaydet
+          </button>
+          </div>
+        </form>
+        }
+
+        <div class="comment-actions flex items-center space-x-4 text-sm text-neutral-400 mt-2">
+          <div class="voting flex flex-row items-center">
+            <button class="text-neutral-400 hover:text-red-400 mr-1">
+              <fa-icon [icon]="faArrowAltCircleUp"></fa-icon>
+            </button>
+            <span class="text-neutral-200 font-medium">124</span>
+            <button class="text-neutral-400 hover:text-sky-400 ml-1">
+              <fa-icon [icon]="faArrowAltCircleDown"></fa-icon>
+            </button>
+          </div>
+          <button class="hover:text-blue-400">Cevapla</button>
+          @if (identityService.getUserId() === comment.userId) {
+            <button class="hover:text-green-400" (click)="editComment(comment.id, comment.content)">Düzenle</button>
+            <button class="hover:text-red-400" (click)="deleteComment(comment.id)">Sil</button>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="nested-comment ml-10 border-l-2 border-neutral-700 pl-4">
+    <div class="comment flex space-x-4 bg-neutral-900 p-4 rounded-xl border border-neutral-700">
+      <div class="comment-body flex-1">
+        <div class="comment-header flex items-center space-x-2">
+          <img 
+            [src]="" 
+            alt="User Avatar" 
+            class="w-8 h-8 rounded-full"
+          />
+          <span class="text-blue-400 font-medium">anotheruser456</span>
+          <span class="text-neutral-500 text-sm">1 saat önce</span>
+        </div>
+
+        <p class="text-neutral-200 mt-2">
+          Bu gerçekten çok ilginç bir nokta! Katılıyorum.
+        </p>
+
+        <div class="comment-actions flex items-center space-x-4 text-sm text-neutral-400 mt-2">
+          <div class="voting flex flex-row items-center">
+            <button class="text-neutral-400 hover:text-red-400 mr-1">
+              <fa-icon [icon]="faArrowAltCircleUp"></fa-icon>
+            </button>
+            <span class="text-neutral-200 font-medium">124</span>
+            <button class="text-neutral-400 hover:text-sky-400 ml-1">
+              <fa-icon [icon]="faArrowAltCircleDown"></fa-icon>
+            </button>
+          </div>
+          <button class="hover:text-blue-400">Cevapla</button>
+          <button class="hover:text-green-400">Düzenle</button>
+          <button class="hover:text-red-400">Sil</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

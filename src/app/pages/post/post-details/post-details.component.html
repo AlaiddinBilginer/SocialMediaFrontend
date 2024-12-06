@@ -1,5 +1,5 @@
 <div 
-  class="bg-neutral-900 max-w-3xl shadow rounded-lg mb-6 ml-12 p-4 border-b border-neutral-500"
+  class="bg-neutral-900 max-w-3xl shadow rounded-lg mb-6 ml-12 p-4"
 >
   <div class="flex justify-between items-center">
     <div class="flex items-center mb-4">
@@ -55,20 +55,24 @@
     <button 
     class="flex items-center space-x-1 transition bg-neutral-700 px-2 rounded-full text-gray-200 hover:text-red-400 hover:bg-neutral-600"
     (click)="$event.stopPropagation()"
-  >
-    <fa-icon [icon]="faHeart" class="text-lg"></fa-icon>
-    <span class="ml-1 text-xs rounded-full px-2 py-0.5 font-bold">
-      30
-    </span>
-  </button>
+    >
+      <fa-icon [icon]="faHeart" class="text-lg"></fa-icon>
+      <span class="ml-1 text-xs rounded-full px-2 py-0.5 font-bold">
+        30
+      </span>
+    </button>
 
-  <button 
-    class="flex items-center space-x-1 text-gray-200 bg-neutral-700 hover:text-sky-400 transition px-2 rounded-full hover:bg-neutral-600"
-  >
-    <fa-icon [icon]="faComment" class="text-lg"></fa-icon>
-    <span class="ml-1 text-xs font-bold rounded-full px-2 py-0.5">
-      25
-    </span>
-  </button>
+    <button 
+      class="flex items-center space-x-1 text-gray-200 bg-neutral-700 hover:text-sky-400 transition px-2 rounded-full hover:bg-neutral-600"
+    >
+      <fa-icon [icon]="faComment" class="text-lg"></fa-icon>
+      <span class="ml-1 text-xs font-bold rounded-full px-2 py-0.5">
+        25
+      </span>
+    </button>
   </div>
+
+    <app-create-post-comment [postId]="postId" (commentCreated)="onCommentCreated()"></app-create-post-comment>
+
+    <app-list-comments [postId]="postId"></app-list-comments>
 </div>  

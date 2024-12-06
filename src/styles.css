@@ -18,31 +18,32 @@
   border-color: #ffcc00 !important;
 }
 
-.dark-theme-popup .swal2-confirm {
-  background-color: #444 !important;
-  color: #fff !important;
-}
-
-.dark-theme-popup .swal2-cancel {
-  background-color: #555 !important;
-  color: #ddd !important;
-}
-
 .small-modal {
-  max-width: 400px !important;
+  margin-right: 0.5rem;
+  max-width: 500px !important;
   padding: 1rem !important;
-  font-size: 0.9rem !important;
+  font-size: 1rem !important;
 }
 
 .small-modal .swal2-title {
   font-size: 1.5rem !important;
 }
 
-.small-modal .swal2-content {
+.small-modal .swal2-content .swal2-cancel{
   font-size: 0.8rem !important;
 }
 
-.small-modal .swal2-confirm {
-  font-size: 0.8rem !important;
-  padding: 0.4rem 0.8rem !important;
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #333333;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #606060;
+  border-radius: 5px;
+  border: 2px solid #2e2e2e;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #747474;
 }

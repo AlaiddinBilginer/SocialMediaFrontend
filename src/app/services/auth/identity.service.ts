@@ -58,4 +58,13 @@ export class IdentityService {
     };
     return null;
   }
+
+  getUserId() : string | null {
+    const token = this.localStorageService.get('accessToken');
+    if(token && this.isAuthenticated) {
+      const decodedToken = this.jwtHelperService.decodeToken(token);
+      return decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || null;
+    };
+    return null;
+  }
 }

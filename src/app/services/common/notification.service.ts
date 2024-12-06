@@ -23,6 +23,40 @@ export class NotificationService {
       }
     });
   }
+
+  confirmDialog(
+    title: string, text: string,
+    confirmButtonText: string,
+    resultTitle: string, resultText: string,
+    onConfirm: () => void
+  ) {
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: confirmButtonText,
+      cancelButtonText: "İptal",
+      customClass: {
+        popup: 'dark-theme-popup small-modal'
+      }
+    }).then((result) => {
+      if(result.isConfirmed) {
+        onConfirm();
+
+        Swal.fire({
+          title: resultTitle,
+          text: resultText,
+          icon: "success",
+          customClass: {
+            popup: 'dark-theme-popup'
+          }
+        });
+      }
+    });
+  }
 }
 
 export class NotificationOptions {
