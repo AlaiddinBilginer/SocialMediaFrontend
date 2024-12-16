@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ResponseModel } from '../../contracts/common/response-model';
 import { Comment } from '../../models/comment';
 import { UpdateCommentRequest } from '../../contracts/comments/update-comment-request';
+import { Reply } from '../../models/reply';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,14 @@ export class CommentService {
       controller: 'comments',
       action: 'updateComment'
     }, updateCommentRequest);
+  }
+
+  getRepliesByParentComment(parentCommentId: string, page: number = 0, size: number = 4)
+  : Observable<{ replies: Reply[] }> {
+    return this.httpClientService.get({
+      controller: 'comments',
+      action: 'getRepliesByParentComment',
+      queryString: `parentCommentId=${parentCommentId}&pagination.page=${page}&pagination.size=${size}`
+    });
   }
 }

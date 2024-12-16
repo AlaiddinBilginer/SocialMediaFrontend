@@ -6,12 +6,12 @@ import { TimeAgo } from '../../../pipes/time-ago.pipe';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 import { CreatePostCommentComponent } from '../../../components/Comments/create-post-comment/create-post-comment.component';
-import { ListCommentsComponent } from "../../../components/Comments/list-comments/list-comments.component";
+import { PostCommentsComponent } from '../../../components/Comments/post-comments/post-comments.component';
 
 @Component({
   selector: 'app-post-details',
   standalone: true,
-  imports: [TimeAgo, RouterModule, FontAwesomeModule, CreatePostCommentComponent, ListCommentsComponent],
+  imports: [TimeAgo, RouterModule, FontAwesomeModule, CreatePostCommentComponent, PostCommentsComponent],
   templateUrl: './post-details.component.html',
   styleUrl: './post-details.component.css'
 })
@@ -33,8 +33,6 @@ export class PostDetailsComponent {
     });
   }
 
-  @ViewChild(ListCommentsComponent) listCommentsComponent!: ListCommentsComponent; 
-
   getPostById(postId: string) {
     this.postService.getPostById(postId).subscribe({
       next: (response) => {
@@ -47,6 +45,6 @@ export class PostDetailsComponent {
   }
 
   onCommentCreated() {
-    this.listCommentsComponent.getCommentByPostId();
+    
   }
 }

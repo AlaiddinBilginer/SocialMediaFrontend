@@ -1,0 +1,40 @@
+<div class="flex items-start space-x-3 mb-4">
+  <img
+    [src]="reply.userProfilePhoto"
+    [alt]="reply.userName"
+    class="w-6 h-6 rounded-full object-cover"
+  />
+  <div class="flex-1">
+    <div class="bg-neutral-900 rounded-lg">
+      <div class="flex items-center">
+        <a 
+          href="#"
+          class="font-semibold text-white hover:text-indigo-300 inline text-sm mr-2"
+        >
+          {{ reply.userName }}
+        </a>
+        <div class="text-sm text-gray-400 text-xs">
+          {{ reply.createdDate | timeAgo }}
+        </div>
+      </div>
+      <div class="text-gray-200 py-2">{{ reply.content }}</div>
+      <div class="flex items-center gap-2 mb-2">
+        <span>
+          <fa-icon 
+            [icon]="faThumbsUp" 
+            class="mr-1 cursor-pointer rounded-full hover:text-green-700">
+          </fa-icon>
+          <span class="text-gray-400 text-sm">150</span>
+        </span>
+        <span>
+          <fa-icon 
+            [icon]="faThumbsDown" 
+            class="cursor-pointer rounded-full hover:text-red-700">
+          </fa-icon>
+          <span class="mr-1 text-gray-400 text-sm">50</span>
+        </span>
+        <button class="text-xs font-semibold py-2 px-3 hover:bg-gray-800 rounded-full">Yanıtla</button>
+      </div>
+    </div>
+  </div>
+</div>
