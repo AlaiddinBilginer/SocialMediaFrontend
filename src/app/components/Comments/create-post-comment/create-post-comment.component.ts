@@ -5,7 +5,6 @@ import { CommentService } from '../../../services/models/comment.service';
 import { CreateCommentRequest } from '../../../contracts/comments/create-comment-request';
 import { NotificationIconType, NotificationPositionType, NotificationService } from '../../../services/common/notification.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ListCommentsComponent } from '../list-comments/list-comments.component';
 
 @Component({
   selector: 'app-create-post-comment',
