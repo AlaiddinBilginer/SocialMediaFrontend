@@ -59,13 +59,13 @@ export class LoginModalComponent implements OnInit {
           this.identityService.checkIdentity();
           this.notificationService.showNotification(response.message + '. Hoş geldin :)', "Giriş Başarılı", {
             notificationIconType: NotificationIconType.Success,
-            notificationPositionType: NotificationPositionType.Center
+            notificationPositionType: NotificationPositionType.BottomRight
           });
         } else {
           this.ngxSpinnerService.hide();
           this.notificationService.showNotification(response.message, "Giriş Başarısız", {
             notificationIconType: NotificationIconType.Error,
-            notificationPositionType: NotificationPositionType.Center
+            notificationPositionType: NotificationPositionType.BottomRight
           });
         }
       },

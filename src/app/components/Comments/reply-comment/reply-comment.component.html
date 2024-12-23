@@ -1,0 +1,36 @@
+<form 
+  [formGroup]="replyForm" 
+  (ngSubmit)="submitReply()" 
+  class="bg-neutral-900 rounded-xl mt-2 ml-12"
+>
+  <div class="relative">
+    <textarea 
+      #commentInput
+      formControlName="content" 
+      id="comment" 
+      rows="2" 
+      maxlength="500"
+      class="w-full bg-neutral-900 text-neutral-200 text-sm rounded-xl border border-neutral-600 p-4 focus:outline-none focus:ring-2 focus:ring-gray-800 resize-none" 
+      placeholder="Yanıtınızı buraya yazın..."
+    ></textarea>
+    <div class="absolute bottom-2 right-4 text-sm text-neutral-400">
+      {{ commentInput.value.length}}/500
+    </div>
+  </div>
+  <div class="flex justify-end mt-2 gap-2">
+    <button 
+      type="button" 
+      class="bg-gray-800 text-white px-4 py-2 text-sm rounded-full font-medium hover:bg-gray-700 transition duration-200"
+      (click)="cancel()"
+    >
+      İptal
+    </button>
+    <button 
+      type="submit" 
+      class="bg-orange-800 text-white px-4 py-2 text-sm rounded-full font-medium hover:bg-orange-700 transition duration-200"
+      [disabled]="replyForm.invalid"
+    >
+      Yanıtla
+    </button>
+  </div>
+</form>

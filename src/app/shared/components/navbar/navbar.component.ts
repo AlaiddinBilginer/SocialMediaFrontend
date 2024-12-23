@@ -47,7 +47,7 @@ export class NavbarComponent {
     this.router.navigate(['/']);
     this.notificationService.showNotification('Hesabınızdan çıkış yapılmıştır. Tekrardan bekleriz :)', "Çıkış Yapıldı", {
       notificationIconType: NotificationIconType.Success,
-      notificationPositionType: NotificationPositionType.Center
+      notificationPositionType: NotificationPositionType.BottomRight
     });
     this.isOpen = false;
   }

@@ -33,6 +33,8 @@ export class PostDetailsComponent {
     });
   }
 
+  @ViewChild(PostCommentsComponent) postCommentsComponent!: PostCommentsComponent;
+
   getPostById(postId: string) {
     this.postService.getPostById(postId).subscribe({
       next: (response) => {
@@ -42,9 +44,5 @@ export class PostDetailsComponent {
         console.log(err);
       }
     });
-  }
-
-  onCommentCreated() {
-    
   }
 }

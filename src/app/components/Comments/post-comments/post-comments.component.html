@@ -1,12 +1,12 @@
 <div class="space-y-6 mt-12">
   @for (comment of comments; track $index) {
-    <app-comment [comment]="comment"></app-comment>
+    <app-comment [postId]="postId" [comment]="comment"></app-comment>
   }
 
   @if (comments.length < totalCommentCount) {
     <button 
-      class="text-blue-500 hover:underline"
-      (click)="fetchComments()"
+      class="text-blue-500 text-sm p-2 cursor-pointer hover:bg-blue-950 rounded-full font-semibold inline"
+      (click)="fetchMoreComments()"
     >
       Daha fazla yorum yükle
     </button>

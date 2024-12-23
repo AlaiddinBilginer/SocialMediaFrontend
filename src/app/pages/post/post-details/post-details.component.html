@@ -53,7 +53,7 @@
   <p class="text-gray-200 mb-4">{{ post.content }}</p>        
   <div class="flex gap-5 items-center mt-6 text-gray-400">
     <button 
-    class="flex items-center space-x-1 transition bg-neutral-700 px-2 rounded-full text-gray-200 hover:text-red-400 hover:bg-neutral-600"
+    class="flex items-center space-x-1 transition bg-neutral-800 px-2 py-1 rounded-full text-gray-200 hover:text-red-400 hover:bg-neutral-600"
     (click)="$event.stopPropagation()"
     >
       <fa-icon [icon]="faHeart" class="text-lg"></fa-icon>
@@ -63,7 +63,7 @@
     </button>
 
     <button 
-      class="flex items-center space-x-1 text-gray-200 bg-neutral-700 hover:text-sky-400 transition px-2 rounded-full hover:bg-neutral-600"
+      class="flex items-center space-x-1 text-gray-200 bg-neutral-800 hover:text-sky-400 transition px-2 py-1 rounded-full hover:bg-neutral-600"
     >
       <fa-icon [icon]="faComment" class="text-lg"></fa-icon>
       <span class="ml-1 text-xs font-bold rounded-full px-2 py-0.5">
@@ -74,7 +74,7 @@
 
     <app-create-post-comment 
       [postId]="postId" 
-      (commentCreated)="onCommentCreated()">
+      (commentCreated)="postCommentsComponent.fetchComments()">
     </app-create-post-comment>
 
     <app-post-comments [postId]="postId"></app-post-comments>

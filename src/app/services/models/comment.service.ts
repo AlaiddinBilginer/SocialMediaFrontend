@@ -16,7 +16,7 @@ export class CommentService {
     private httpClientService: HttpClientService,
   ) { }
 
-  createComment(createCommentRequest: CreateCommentRequest) : Observable<ResponseModel> {
+  createComment(createCommentRequest: CreateCommentRequest) : Observable<Reply | Comment> {
     return this.httpClientService.post({
       controller: 'comments',
       action: 'createComment'

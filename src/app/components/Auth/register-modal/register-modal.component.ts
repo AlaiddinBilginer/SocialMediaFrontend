@@ -54,7 +54,7 @@ export class RegisterModalComponent implements OnInit {
           {
             notificationIconType: response.succeeded 
             ? NotificationIconType.Success : NotificationIconType.Error,
-            notificationPositionType: NotificationPositionType.Center,
+            notificationPositionType: NotificationPositionType.BottomRight,
           }
         );
       },
@@ -66,7 +66,7 @@ export class RegisterModalComponent implements OnInit {
           "Hata",
           {
             notificationIconType: NotificationIconType.Error,
-            notificationPositionType: NotificationPositionType.BottomEnd,
+            notificationPositionType: NotificationPositionType.BottomRight,
           }
         );
       },

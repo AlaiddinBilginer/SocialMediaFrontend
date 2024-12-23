@@ -45,13 +45,10 @@ export class CreatePostCommentComponent implements OnInit {
     this.commentService.createComment(createCommentRequest).subscribe({
       next: (response) => {
         this.ngxSpinnerService.hide();
-        this.notificationService.showNotification(
-          response.message, response.succeeded ? "Başarılı" : "Başarısız", 
-          {
-            notificationIconType: response.succeeded ? NotificationIconType.Success : NotificationIconType.Error,
-            notificationPositionType: NotificationPositionType.BottomRight
-          }
-        );
+        this.notificationService.showNotification("Yorum eklendi", "Başarılı", {
+          notificationIconType: NotificationIconType.Success,
+          notificationPositionType: NotificationPositionType.BottomRight
+        });
         this.commentForm.reset();
 
         this.commentCreated.emit();

@@ -3,6 +3,7 @@ import { Comment } from '../../../models/comment';
 import { CommentService } from '../../../services/models/comment.service';
 import { IdentityService } from '../../../services/auth/identity.service';
 import { CommentComponent } from '../comment/comment.component';
+import { Reply } from '../../../models/reply';
 
 @Component({
   selector: 'app-post-comments',
@@ -12,10 +13,12 @@ import { CommentComponent } from '../comment/comment.component';
   styleUrl: './post-comments.component.css'
 })
 export class PostCommentsComponent implements OnInit {
+  @Input() postId: string = '';
+  
   comments: Comment[] = [];
   totalCommentCount: number = 0;
-  
-  @Input() postId: string = '';
+  page: number = 1;
+  size: number = 8;
 
   constructor(
     private commentService: CommentService,
@@ -27,11 +30,22 @@ export class PostCommentsComponent implements OnInit {
   }
 
   fetchComments(): void {
+    this.page = 1;
     this.commentService
-      .getCommentsByPostId(this.postId, 0, 3, this.identityService.getUserId())
+      .getCommentsByPostId(this.postId, (this.page - 1), this.size, this.identityService.getUserId())
       .subscribe((response) => {
         this.comments = response.comments;
         this.totalCommentCount = response.totalCommentCount
       });
+  }
+
+  fetchMoreComments(): void {
+    this.page++;
+    this.commentService
+    .getCommentsByPostId(this.postId, (this.page - 1), this.size, this.identityService.getUserId())
+    .subscribe((response) => {
+      this.comments = [...this.comments, ...response.comments]
+      this.totalCommentCount = response.totalCommentCount
+    });
   }
 }
