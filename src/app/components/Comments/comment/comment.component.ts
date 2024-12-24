@@ -10,11 +10,12 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { ReplyCommentComponent } from '../reply-comment/reply-comment.component';
 import { IdentityService } from '../../../services/auth/identity.service';
 import { NotificationService } from '../../../services/common/notification.service';
+import { EditCommentComponent } from '../edit-comment/edit-comment.component';
 
 @Component({
   selector: 'app-comment',
   standalone: true,
-  imports: [TimeAgo, ReplyComponent, FontAwesomeModule, ReplyCommentComponent],
+  imports: [TimeAgo, ReplyComponent, FontAwesomeModule, ReplyCommentComponent, EditCommentComponent],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css'
 })
@@ -28,9 +29,11 @@ export class CommentComponent implements OnInit {
   showReplies: boolean = false;
   showTempReplies: boolean = false;
   replying: boolean = false;
+  editing: boolean = false;
   page: number = 1;
   size: number = 6;
   activeMenuId: string | null = null;
+  
 
   faComments = faComments;
   faThumbsUp = faThumbsUp;
@@ -79,6 +82,11 @@ export class CommentComponent implements OnInit {
 
   toggleReply(): void {
     this.replying = !this.replying;
+  }
+
+  toggleEdit(): void {
+    this.editing = !this.editing;
+    this.activeMenuId = null;
   }
 
   addTempReply(reply: Reply): void {
@@ -130,5 +138,9 @@ export class CommentComponent implements OnInit {
       this.tempReplies.splice(deletedReply, 1);
       this.comment.totalRepliesCount--;
     }
+  }
+
+  updateContent(content: string) {
+    this.comment.content = content;
   }
 }

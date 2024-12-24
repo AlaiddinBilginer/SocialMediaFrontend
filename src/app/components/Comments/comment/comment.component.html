@@ -29,7 +29,7 @@
             <div class="absolute right-4 mt-10 bg-neutral-800 border border-gray-700 rounded-lg shadow-lg z-10">
               <button 
                 class="block w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-t-lg"
-                (click)="editComment(comment.id)">
+                (click)="toggleEdit()">
                 Düzenle
               </button>
               <button 
@@ -41,31 +41,40 @@
           }
         </div>
       } 
-      <div class="text-gray-200 py-2">{{ comment.content }}</div>
-      <div class="flex items-center gap-2 mb-2">
-        <span>
-          <fa-icon 
-            [icon]="faThumbsUp" 
-            class="mr-1 cursor-pointer rounded-full hover:text-green-700">
-          </fa-icon>
-          <span class="text-gray-400 text-sm">150</span>
-        </span>
-        <span>
-          <fa-icon 
-            [icon]="faThumbsDown" 
-            class="mr-1 cursor-pointer rounded-full hover:text-red-700">
-          </fa-icon>
-          <span class="text-gray-400 text-sm">50</span>
-        </span>
-        @if (identityService.isAuthenticated) {
-          <button 
-            class="text-xs font-semibold py-2 px-3 hover:bg-gray-800 rounded-full"
-            (click)="toggleReply()"
-          >
-            Yanıtla
-          </button>
-        }
-      </div>
+      @if (editing) {
+        <app-edit-comment 
+          [commentId]="comment.id" 
+          [content]="comment.content"
+          (cancelEdit)="toggleEdit()"
+          (refreshContent)="updateContent($event)">
+        </app-edit-comment>
+      } @else {
+        <div class="text-gray-200 py-2">{{ comment.content }}</div>
+        <div class="flex items-center gap-2 mb-2">
+          <span>
+            <fa-icon 
+              [icon]="faThumbsUp" 
+              class="mr-1 cursor-pointer rounded-full hover:text-green-700">
+            </fa-icon>
+            <span class="text-gray-400 text-sm">150</span>
+          </span>
+          <span>
+            <fa-icon 
+              [icon]="faThumbsDown" 
+              class="mr-1 cursor-pointer rounded-full hover:text-red-700">
+            </fa-icon>
+            <span class="text-gray-400 text-sm">50</span>
+          </span>
+          @if (identityService.isAuthenticated) {
+            <button 
+              class="text-xs font-semibold py-2 px-3 hover:bg-gray-800 rounded-full"
+              (click)="toggleReply()"
+            >
+              Yanıtla
+            </button>
+          }
+        </div>
+      }
       @if (comment.totalRepliesCount > 0) {
         <div class="flex items-center">
           <button

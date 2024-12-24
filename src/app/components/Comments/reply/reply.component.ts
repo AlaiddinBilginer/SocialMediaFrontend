@@ -9,11 +9,12 @@ import { Comment } from '../../../models/comment';
 import { IdentityService } from '../../../services/auth/identity.service';
 import { NotificationService } from '../../../services/common/notification.service';
 import { CommentService } from '../../../services/models/comment.service';
+import { EditCommentComponent } from '../edit-comment/edit-comment.component';
 
 @Component({
   selector: 'app-reply',
   standalone: true,
-  imports: [TimeAgo, FontAwesomeModule, ReplyCommentComponent],
+  imports: [TimeAgo, FontAwesomeModule, ReplyCommentComponent, EditCommentComponent],
   templateUrl: './reply.component.html',
   styleUrl: './reply.component.css'
 })
@@ -27,6 +28,7 @@ export class ReplyComponent {
   showTempReplies: boolean = true;
   tempReplies: Reply[] = [];
   activeMenuId: string | null = null;
+  editing: boolean = false;
 
   faComments = faComments;
   faThumbsUp = faThumbsUp;
@@ -55,6 +57,11 @@ export class ReplyComponent {
   toggleMenu(commentId: string): void {
     this.activeMenuId = this.activeMenuId === commentId ? null : commentId;
   }
+  
+  toggleEdit(): void {
+    this.editing = !this.editing;
+    this.activeMenuId = null;
+  }
 
   editComment(commentId: string): void {
 
@@ -79,5 +86,9 @@ export class ReplyComponent {
     if(!target.closest('.dropdown')) {
       this.activeMenuId = null;
     }
+  }
+
+  updateReplyContent(content: string) {
+    this.reply.content = content;
   }
 }

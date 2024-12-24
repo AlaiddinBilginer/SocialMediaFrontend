@@ -1,4 +1,4 @@
 export interface UpdateCommentRequest {
-  commentId: string | null;
-  content: string | null;
+  commentId: string;
+  content: string;
 }
