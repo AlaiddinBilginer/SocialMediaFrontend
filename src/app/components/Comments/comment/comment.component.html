@@ -4,7 +4,7 @@
     [alt]="comment.userName"
     class="w-8 h-8 rounded-full object-cover"
   />
-  <div class="flex-1">
+  <div class="relative flex-1">
     <div class="bg-neutral-900 rounded-lg">
       <div class="flex items-center">
         <a 
@@ -17,6 +17,30 @@
           {{ comment.createdDate | timeAgo }}
         </div>
       </div>
+      @if (identityService.getUserId() === comment.userId) {
+        <div class="dropdown">
+          <button
+            class="p-2 rounded-full hover:bg-gray-800 absolute right-0"
+            (click)="toggleMenu(comment.id)"
+          >
+            <fa-icon [icon]="faEllipsisV"></fa-icon>
+          </button>
+          @if (comment.id === activeMenuId) {
+            <div class="absolute right-4 mt-10 bg-neutral-800 border border-gray-700 rounded-lg shadow-lg z-10">
+              <button 
+                class="block w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-t-lg"
+                (click)="editComment(comment.id)">
+                Düzenle
+              </button>
+              <button 
+                class="block w-full px-4 py-2 text-sm text-red-500 hover:bg-gray-700 rounded-b-lg"
+                (click)="deleteComment(comment.id)">
+                Sil
+              </button>
+            </div>
+          }
+        </div>
+      } 
       <div class="text-gray-200 py-2">{{ comment.content }}</div>
       <div class="flex items-center gap-2 mb-2">
         <span>
@@ -74,7 +98,8 @@
       <app-reply 
         [reply]="reply" 
         [postId]="postId" 
-        [parentComment]="comment">
+        [parentComment]="comment"
+        (refreshReplies)="refreshTempRepliesDelete($event)">
       </app-reply>
     }
   </div>
@@ -86,7 +111,8 @@
       <app-reply 
         [reply]="reply" 
         [postId]="postId" 
-        [parentComment]="comment">
+        [parentComment]="comment"
+        (refreshReplies)="refresReplieshDelete($event)">
       </app-reply>
     }
     @if (this.page * this.size < comment.totalRepliesCount - tempReplies.length) {

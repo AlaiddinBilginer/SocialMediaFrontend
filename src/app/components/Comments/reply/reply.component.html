@@ -4,7 +4,7 @@
     [alt]="reply.userName"
     class="w-6 h-6 rounded-full object-cover"
   />
-  <div class="flex-1">
+  <div class="relative flex-1">
     <div class="bg-neutral-900 rounded-lg">
       <div class="flex items-center">
         <a 
@@ -17,6 +17,30 @@
           {{ reply.createdDate | timeAgo }}
         </div>
       </div>
+      @if (identityService.getUserId() === reply.userId) {
+        <div class="dropdown">
+          <button
+            class="p-2 rounded-full hover:bg-gray-800 absolute right-0"
+            (click)="toggleMenu(reply.id)"
+          >
+            <fa-icon [icon]="faEllipsisV"></fa-icon>
+          </button>
+          @if (reply.id === activeMenuId) {
+            <div class="absolute right-4 mt-10 bg-neutral-800 border border-gray-700 rounded-lg shadow-lg z-10">
+              <button 
+                class="block w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-t-lg"
+                (click)="editComment(reply.id)">
+                Düzenle
+              </button>
+              <button 
+                class="block w-full px-4 py-2 text-sm text-red-500 hover:bg-gray-700 rounded-b-lg"
+                (click)="deleteComment(reply.id)">
+                Sil
+              </button>
+            </div>
+          }
+        </div>
+      } 
       <div class="text-gray-200 py-2">{{ reply.content }}</div>
       <div class="flex items-center gap-2 mb-2">
         <span>

@@ -1,6 +1,10 @@
 <div class="space-y-6 mt-12">
   @for (comment of comments; track $index) {
-    <app-comment [postId]="postId" [comment]="comment"></app-comment>
+    <app-comment 
+      [postId]="postId" 
+      [comment]="comment"
+      (refreshListing)="fetchComments()">
+    </app-comment>
   }
 
   @if (comments.length < totalCommentCount) {
