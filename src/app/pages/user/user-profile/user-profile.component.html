@@ -1,0 +1,61 @@
+<div class="bg-neutral-900 text-white min-h-screen max-w-4xl ml-12">
+  <!-- Cover Photo -->
+  <div 
+    class="w-full h-48 bg-cover bg-center relative rounded-xl" 
+    [ngStyle]="{ 'background-image': 'url(' + (user.coverPhoto ?? 'default-cover-photo.jpg') + ')' }">
+    <div class="absolute top-32 left-4 flex items-center gap-4">
+      <!-- Profile Photo -->
+      <img 
+        [src]="user.profilePhoto || 'null-profil-photo.png'"
+        alt="Profile Photo" 
+        class="w-36 h-36 rounded-full border-4 border-gray-800 object-cover" />
+      <!-- User Info -->
+      <div class="mt-12">
+        <h1 class="text-2xl font-bold">{{ user.fullName }}</h1>
+        <p class="text-gray-400">&#64;{{ user.userName }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex justify-end mt-2">
+    <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full text-white">Takip Et</button>
+  </div>
+
+  <!-- Bio Section -->
+
+  <div class="px-4 mt-12 mb-1">
+    @if (user.bio) {
+      <p class="text-gray-300">{{ user.bio }}</p>
+    }
+  </div>
+
+
+  <!-- Account Info -->
+  <div class="px-4 mb-2">
+    <p class="text-gray-500">
+      Katılma tarihi: 
+      <span class="text-gray-300">{{ user.accountCreatedDate | formatDate }}</span>
+    </p>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="grid grid-cols-4 text-center bg-neutral-800">
+    <div class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300">
+      <p class="text-xl font-bold">{{ user.postsCount }}</p>
+      <p class="text-gray-400">Posts</p>
+    </div>
+    <div class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300">
+      <p class="text-xl font-bold">{{ user.commentsCount }}</p>
+      <p class="text-gray-400">Comments</p>
+    </div>
+    <div class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300">
+      <p class="text-xl font-bold">{{ user.followersCount }}</p>
+      <p class="text-gray-400">Followers</p>
+    </div>
+    <div class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300">
+      <p class="text-xl font-bold">{{ user.followingCount }}</p>
+      <p class="text-gray-400">Following</p>
+    </div>
+  </div>
+</div>

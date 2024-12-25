@@ -37,8 +37,9 @@
         @if (isOpen) {
           <div class="absolute right-0 mt-2 w-48 bg-neutral-800 rounded-md shadow-lg overflow-hidden z-20">
             <a 
-              routerLink="/profile" 
+              [routerLink]="['/kullanici', identityService.getUserName()]" 
               class="flex items-center space-x-2 px-4 py-2 hover:bg-neutral-700 transition"
+              (click)="closeDropdown()"
             >
               <fa-icon [icon]="faUser" class="text-neutral-400"></fa-icon>
               <span>Profili Görüntüle</span>
@@ -46,6 +47,7 @@
             <a 
               routerLink="/settings" 
               class="flex items-center space-x-2 px-4 py-2 hover:bg-neutral-700 transition"
+              (click)="toggleDropdown()"
             >
               <fa-icon [icon]="faCog" class="text-neutral-400"></fa-icon>
               <span>Ayarlar</span>

@@ -9,7 +9,7 @@
         <div class="flex justify-between items-center">
           <div class="flex items-center mb-4">
             @if (post.userProfilePhoto) {
-              <a routerLink="" (click)="$event.stopPropagation()">
+              <a [routerLink]="['/kullanici', post.userName]" (click)="$event.stopPropagation()">
                 <img 
                   [src]="post.userProfilePhoto" 
                   alt="{{ post.userName }}" 
@@ -18,7 +18,7 @@
               </a>
             } @else {
               <div>
-                <a routerLink="" (click)="$event.stopPropagation()">
+                <a [routerLink]="['/kullanici', post.userName]" (click)="$event.stopPropagation()">
                   <div class="w-8 h-8 bg-neutral-600 rounded-full flex items-center justify-center">
                     <span class="text-sm font-bold text-gray-200">{{ post.userName[0] }}</span>
                   </div>
@@ -26,7 +26,7 @@
               </div>
             }
             <div class="flex items-center">
-              <a routerLink="" class="hover:underline" (click)="$event.stopPropagation()">
+              <a [routerLink]="['/kullanici', post.userName]" class="hover:underline" (click)="$event.stopPropagation()">
                 <p class="font-semibold text-sm text-gray-300 ml-2">{{ post.userName }}</p>
               </a>
               <p class="text-xs text-zinc-400 ml-2">{{ post.createdDate | timeAgo }}</p>

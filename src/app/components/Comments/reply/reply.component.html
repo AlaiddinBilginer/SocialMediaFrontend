@@ -1,14 +1,16 @@
 <div class="flex items-start space-x-3 mb-2">
-  <img
-    [src]="reply.userProfilePhoto"
-    [alt]="reply.userName"
-    class="w-6 h-6 rounded-full object-cover"
-  />
+  <a [routerLink]="['/kullanici', reply.userName]">
+    <img
+      [src]="reply.userProfilePhoto ?? 'null-profil-photo.png'" 
+      [alt]="reply.userName"
+      class="w-6 h-6 rounded-full object-cover"
+    />
+  </a>
   <div class="relative flex-1">
     <div class="bg-neutral-900 rounded-lg">
       <div class="flex items-center">
         <a 
-          href="#"
+        [routerLink]="['/kullanici', reply.userName]"
           class="font-semibold text-white hover:text-indigo-300 inline text-sm mr-2"
         >
           {{ reply.userName }}

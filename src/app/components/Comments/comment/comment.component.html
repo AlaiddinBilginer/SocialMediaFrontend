@@ -1,14 +1,17 @@
 <div class="flex items-start space-x-3 mb-3">
-  <img 
-    [src]="comment.userProfilePhoto" 
-    [alt]="comment.userName"
-    class="w-8 h-8 rounded-full object-cover"
-  />
+  <a
+    [routerLink]="['/kullanici', comment.userName]">
+    <img 
+      [src]="comment.userProfilePhoto ?? 'null-profil-photo.png'"  
+      [alt]="comment.userName"
+      class="w-8 h-8 rounded-full object-cover"
+    />
+  </a>
   <div class="relative flex-1">
     <div class="bg-neutral-900 rounded-lg">
       <div class="flex items-center">
         <a 
-          href="#" 
+          [routerLink]="['/kullanici', comment.userName]"
           class="font-semibold text-white hover:text-indigo-300 inline text-sm mr-2"
         >
           {{ comment.userName }}

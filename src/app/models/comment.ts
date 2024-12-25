@@ -3,7 +3,7 @@ export interface Comment {
   content: string;
   userId: string;
   userName: string;
-  userProfilePhoto: string;
+  userProfilePhoto: string | null;
   totalRepliesCount: number;
   createdDate: Date;
   updatedDate: Date;

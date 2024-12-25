@@ -3,7 +3,7 @@ export interface Reply {
   content: string;
   userId: string;
   userName: string;
-  userProfilePhoto: string;
+  userProfilePhoto: string | null;
   createdDate: Date;
   updatedDate: Date;
 }

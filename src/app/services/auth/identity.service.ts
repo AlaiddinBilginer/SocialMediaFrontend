@@ -36,7 +36,7 @@ export class IdentityService {
     const token = this.localStorageService.get('accessToken');
     if(token && this.isAuthenticated) {
       const decodedToken = this.jwtHelperService.decodeToken(token);
-      return decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || null;
+      return decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] || null;
     };
     return null;
   }

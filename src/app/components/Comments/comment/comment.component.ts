@@ -11,11 +11,12 @@ import { ReplyCommentComponent } from '../reply-comment/reply-comment.component'
 import { IdentityService } from '../../../services/auth/identity.service';
 import { NotificationService } from '../../../services/common/notification.service';
 import { EditCommentComponent } from '../edit-comment/edit-comment.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-comment',
   standalone: true,
-  imports: [TimeAgo, ReplyComponent, FontAwesomeModule, ReplyCommentComponent, EditCommentComponent],
+  imports: [TimeAgo, ReplyComponent, FontAwesomeModule, ReplyCommentComponent, EditCommentComponent, RouterModule],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css'
 })

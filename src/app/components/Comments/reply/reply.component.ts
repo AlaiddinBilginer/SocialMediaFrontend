@@ -10,11 +10,12 @@ import { IdentityService } from '../../../services/auth/identity.service';
 import { NotificationService } from '../../../services/common/notification.service';
 import { CommentService } from '../../../services/models/comment.service';
 import { EditCommentComponent } from '../edit-comment/edit-comment.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-reply',
   standalone: true,
-  imports: [TimeAgo, FontAwesomeModule, ReplyCommentComponent, EditCommentComponent],
+  imports: [TimeAgo, FontAwesomeModule, ReplyCommentComponent, EditCommentComponent, RouterModule],
   templateUrl: './reply.component.html',
   styleUrl: './reply.component.css'
 })
