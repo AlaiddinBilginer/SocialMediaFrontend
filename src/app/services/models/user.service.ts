@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClientService } from '../common/http-client.service';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user';
+import { Post } from '../../models/post';
 
 @Injectable({
   providedIn: 'root'
@@ -18,4 +19,13 @@ export class UserService {
       action: 'getUserProfile',
     }, userName);
   }
+
+  getPosts(userName: string, page: number = 0, size: number = 10) : Observable<{ totalPostCount: number, posts: Post[] }> {
+    return this.httpClientService.get({
+      controller: 'users',
+      action: 'getPosts',
+      queryString: `UserName=${userName}&Pagination.Page=${page}&Pagination.Size=${size}`
+    });
+  }
+
 }

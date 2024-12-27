@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { FormatDatePipe } from '../../../pipes/format-date.pipe';
 import { UserService } from '../../../services/models/user.service';
 import { ActivatedRoute } from '@angular/router';
+import { UserPostsComponent } from '../user-posts/user-posts.component';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, FormatDatePipe],
+  imports: [CommonModule, FormatDatePipe, UserPostsComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })

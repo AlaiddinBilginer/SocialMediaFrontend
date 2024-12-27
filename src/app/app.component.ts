@@ -16,10 +16,19 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+    // Tarayıcının scroll restoration özelliğini devre dışı bırak
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    // Sayfa yenilendiğinde veya rota değişiminde scroll sıfırla
     this.router.events.subscribe(event => {
-      if(event instanceof NavigationEnd) {
-        window.scrollTo(0,0);
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
       }
     });
+
+    // Sayfa yenilendiğinde scroll sıfırla
+    window.scrollTo(0, 0);
   }
 }

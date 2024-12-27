@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Post } from '../../../models/post';
 import { TimeAgo } from '../../../pipes/time-ago.pipe';
 import { RouterModule } from '@angular/router';
@@ -13,9 +13,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './list-posts.component.html',
   styleUrl: './list-posts.component.css',
 })
-export class ListPostsComponent{
+export class ListPostsComponent implements OnInit{
   @Input() totalPostCount!: number;
   @Input() posts: Post[] = [];
+  @Output() loadPosts = new EventEmitter<void>();
   currentIndex = 0;
   faHeart = faHeart;
   faComment = faComment;
@@ -26,23 +27,16 @@ export class ListPostsComponent{
     library.addIcons(faHeart, faComment);
   }
 
-    // Resmi bir ileri al
-    nextImage(totalImages: number) {
-      this.currentIndex = (this.currentIndex + 1) % totalImages;
+  ngOnInit(): void {
+    window.addEventListener('scroll', this.onScroll.bind(this));
+  }
+
+  onScroll(): void {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const documentHeight = document.body.scrollHeight;
+
+    if(scrollPosition >= documentHeight - 100) {
+      this.loadPosts.emit();
     }
-  
-    // Resmi bir geri al
-    prevImage(totalImages: number) {
-      this.currentIndex = (this.currentIndex - 1 + totalImages) % totalImages;
-    }
-  
-    // Belirli bir resme git
-    goToImage(index: number) {
-      this.currentIndex = index;
-    }
-  
-    // TrackBy fonksiyonu
-    trackByIndex(index: number): number {
-      return index;
-    }
+  }
 }
