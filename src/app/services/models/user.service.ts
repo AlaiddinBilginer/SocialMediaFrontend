@@ -3,6 +3,7 @@ import { HttpClientService } from '../common/http-client.service';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user';
 import { Post } from '../../models/post';
+import { ResponseModel } from '../../contracts/common/response-model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +29,17 @@ export class UserService {
     });
   }
 
+  follow(followedUserName: string): Observable<ResponseModel> {
+    return this.httpClientService.post({
+      controller: 'users',
+      action: 'follow'
+    }, null, followedUserName);
+  }
+
+  unfollow(unfollowedUserName: string): Observable<ResponseModel> {
+    return this.httpClientService.post({
+      controller: 'users',
+      action: 'unfollow'
+    }, null, unfollowedUserName);
+  }
 }

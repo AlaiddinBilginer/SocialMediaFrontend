@@ -8,5 +8,6 @@ export interface User {
   commentsCount: number;
   followersCount: number;
   followingCount: number;
+  isFollower: boolean;
   accountCreatedDate: Date;
 }

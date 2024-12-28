@@ -36,8 +36,8 @@ export class HttpClientService {
     return this.httpClient.get<T>(url, { headers: requestParameters.headers });
   }
 
-  post<T>(requestParameters: Partial<RequestParameters>, body: any): Observable<T> {
-    const url = this.buildUrl(requestParameters);
+  post<T>(requestParameters: Partial<RequestParameters>, body?: any, id?: string): Observable<T> {
+    const url = this.buildUrl(requestParameters, id);
     return this.httpClient.post<T>(url, body, { headers: requestParameters.headers });
   }
 

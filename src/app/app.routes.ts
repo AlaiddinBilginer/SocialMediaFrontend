@@ -12,5 +12,5 @@ export const routes: Routes = [
   { path: 'gonderi-paylas', component: CreatePostComponent, canActivate: [authGuard] },
   { path: 'gonderiler/kategori/:categoryName', component: ListPostByCategoryComponent },
   { path: 'gonderi/detaylar/:postId', component: PostDetailsComponent },
-  { path: 'kullanici/:userName', component: UserProfileComponent }
+  { path: 'kullanici/:userName', component: UserProfileComponent, canActivate: [authGuard] }
 ];
