@@ -50,11 +50,17 @@
   </div>
 
   <div class="grid grid-cols-4 text-center bg-neutral-800 mb-8">
-    <div class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300">
+    <div 
+      class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300"
+      (click)="show()"
+    >
       <p class="text-xl font-bold">{{ user.postsCount }}</p>
       <p class="text-gray-400">Posts</p>
     </div>
-    <div class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300">
+    <div 
+      class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300"
+      (click)="show('comments')"
+    >
       <p class="text-xl font-bold">{{ user.commentsCount }}</p>
       <p class="text-gray-400">Comments</p>
     </div>
@@ -68,5 +74,9 @@
     </div>
   </div>
 
-  <app-user-posts [userName]="userName"></app-user-posts>
+  @if (whichShow === 'posts') {
+    <app-user-posts [userName]="userName"></app-user-posts>
+  } @else if (whichShow === 'comments') {
+    <app-user-comments [userName]="userName"></app-user-comments>
+  }
 </div>

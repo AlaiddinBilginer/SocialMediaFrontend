@@ -20,7 +20,7 @@
               <div>
                 <a [routerLink]="['/kullanici', post.userName]" (click)="$event.stopPropagation()">
                   <div class="w-8 h-8 bg-neutral-600 rounded-full flex items-center justify-center">
-                    <span class="text-sm font-bold text-gray-200">{{ post.userName[0] }}</span>
+                    <span class="text-sm font-bold text-gray-200">{{ post.userName[0].toUpperCase() }}</span>
                   </div>
                 </a>
               </div>

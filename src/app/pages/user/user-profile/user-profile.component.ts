@@ -4,19 +4,21 @@ import { CommonModule } from '@angular/common';
 import { FormatDatePipe } from '../../../pipes/format-date.pipe';
 import { UserService } from '../../../services/models/user.service';
 import { ActivatedRoute } from '@angular/router';
-import { UserPostsComponent } from '../user-posts/user-posts.component';
 import { IdentityService } from '../../../services/auth/identity.service';
+import { UserPostsComponent } from '../../../components/Users/user-posts/user-posts.component';
+import { UserCommentsComponent } from '../../../components/Users/user-comments/user-comments.component';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, FormatDatePipe, UserPostsComponent],
+  imports: [CommonModule, FormatDatePipe, UserPostsComponent, UserCommentsComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent implements OnInit {
   user!: User;
   userName: string = '';
+  whichShow: string = 'posts';
 
   constructor(
     private userService: UserService,
@@ -53,5 +55,16 @@ export class UserProfileComponent implements OnInit {
         this.user.followersCount--;
       }
     })
+  }
+
+  show(value?: string) {
+    switch (value) {
+      case 'comments':
+        this.whichShow = 'comments'
+        break;
+      default:
+        this.whichShow = 'posts'
+        break;
+    }
   }
 }

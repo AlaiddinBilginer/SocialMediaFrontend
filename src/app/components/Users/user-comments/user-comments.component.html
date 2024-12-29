@@ -1,0 +1,46 @@
+@for (comment of comments; track $index) {
+  <div class="flex items-start space-x-3 ml-12 bg-neutral-900 shadow rounded-lg mb-6 p-4 border-b border-neutral-700 
+  hover:bg-neutral-800 cursor-pointer max-w-3xl"
+    [routerLink]="['/gonderi/detaylar', comment.postId]"
+  >
+    <a>
+      <img 
+        [src]="comment.userProfilePhoto ?? 'null-profil-photo.png'"  
+        [alt]="comment.userName"
+        class="w-8 h-8 rounded-full object-cover"
+      />
+    </a>
+    <div class="relative flex-1">
+      <div class="rounded-lg">
+        <div class="flex items-center">
+          <a 
+            [routerLink]="['/kullanici', comment.userName]"
+            class="font-semibold text-white text-sm mr-2"
+          >
+            {{ comment.userName }}
+          </a>
+          <div class="text-sm text-gray-400 text-xs">
+            {{ comment.createdDate | timeAgo }}
+          </div>
+        </div>
+        <div class="text-gray-200 py-2">{{ comment.content }}</div>
+        <div class="flex items-center gap-2 mb-2">
+          <span>
+            <fa-icon 
+              [icon]="faThumbsUp" 
+              class="mr-1 cursor-pointer rounded-full hover:text-green-700">
+            </fa-icon>
+            <span class="text-gray-400 text-sm">150</span>
+          </span>
+          <span>
+            <fa-icon 
+              [icon]="faThumbsDown" 
+              class="mr-1 cursor-pointer rounded-full hover:text-red-700">
+            </fa-icon>
+            <span class="text-gray-400 text-sm">50</span>
+          </span>
+        </div>
+      </div>
+    </div>
+</div>
+}

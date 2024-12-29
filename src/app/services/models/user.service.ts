@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../models/user';
 import { Post } from '../../models/post';
 import { ResponseModel } from '../../contracts/common/response-model';
+import { GetCommentsResponse } from '../../contracts/users/get-comments-response';
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +42,14 @@ export class UserService {
       controller: 'users',
       action: 'unfollow'
     }, null, unfollowedUserName);
+  }
+
+  getComments(userName: string, page: number = 0, size: number = 10)
+  : Observable<{ totalCommentsCount: number, comments: GetCommentsResponse[]}> {
+    return this.httpClientService.get({
+      controller: 'users',
+      action: 'getComments',
+      queryString: `userName=${userName}&pagination.page=${page}&pagination.size=${size}`
+    });
   }
 }

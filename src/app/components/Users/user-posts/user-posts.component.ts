@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { UserService } from '../../../services/models/user.service';
 import { Post } from '../../../models/post';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -11,7 +11,7 @@ import { ListPostsComponent } from '../../../components/Posts/list-posts/list-po
   templateUrl: './user-posts.component.html',
   styleUrl: './user-posts.component.css'
 })
-export class UserPostsComponent implements OnInit {
+export class UserPostsComponent implements OnInit, OnChanges {
   @Input() userName: string = '';
 
   posts: Post[] = [];
@@ -26,6 +26,12 @@ export class UserPostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPosts();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['userName'] && !changes['userName'].firstChange) {
+      this.getPosts();
+    }
   }
 
   getPosts(): void {
