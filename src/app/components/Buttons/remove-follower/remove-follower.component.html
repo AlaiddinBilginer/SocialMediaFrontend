@@ -1,0 +1,11 @@
+@if (!isRemoved && identityService.getUserName() === profileOwner) {
+  <button 
+    class="bg-red-600 hover:bg-red-700 w-28 px-4 py-2 rounded-full text-white"
+    (click)="remove()"
+  >
+    Kaldır
+  </button>
+} @else {
+  <app-follow [userName]="userName" [isFollower]="isFollower"></app-follow>
+}
+

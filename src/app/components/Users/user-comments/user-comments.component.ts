@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   standalone: true,
   imports: [RouterModule, TimeAgo, FontAwesomeModule],
   templateUrl: './user-comments.component.html',
-  styleUrls: ['./user-comments.component.css'] // styleUrl yerine styleUrls kullanıldı
+  styleUrl: './user-comments.component.css'
 })
 export class UserCommentsComponent implements OnInit, OnChanges {
   @Input() userName: string = '';

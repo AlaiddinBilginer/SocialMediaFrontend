@@ -1,0 +1,21 @@
+@if (identityService.getUserName() !== userName) {
+    <div class="flex justify-end mt-2">
+      @if (isFollower) {
+        <button 
+          class="bg-red-600 hover:bg-red-700 w-28 px-4 py-2 rounded-full text-white"
+          (click)="unfollow()"
+        >
+          Takibi Bırak
+        </button>
+      } @else {
+        <button 
+          class="bg-blue-600 hover:bg-blue-700 w-28 px-4 py-2 rounded-full text-white"
+          (click)="follow()"
+        >
+          Takip Et
+        </button>
+      }
+    </div>
+  } @else {
+    
+  }

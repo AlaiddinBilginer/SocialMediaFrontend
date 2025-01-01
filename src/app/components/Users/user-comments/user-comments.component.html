@@ -5,7 +5,7 @@
   >
     <a>
       <img 
-        [src]="comment.userProfilePhoto ?? 'null-profil-photo.png'"  
+        [src]="comment.userProfilePhoto ? comment.userProfilePhoto : 'null-profil-photo.png'"
         [alt]="comment.userName"
         class="w-8 h-8 rounded-full object-cover"
       />

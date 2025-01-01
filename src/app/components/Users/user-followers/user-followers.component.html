@@ -1,0 +1,62 @@
+<div class="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50" (click)="closeModal()">
+  <div
+    class="bg-neutral-900  rounded-lg max-w-md w-full shadow-lg transform transition-all duration-300 pb-5"
+    (click)="$event.stopPropagation()"
+  >
+    <button (click)="closeModal()" class="flex-inline">
+      <fa-icon [icon]="faXmark" class="absolute right-4 top-2 text-2xl cursor-pointer"></fa-icon>
+    </button>
+    <h2 class="text-xl font-bold text-white mb-6 text-center pb-4 border-b border-neutral-700">Takipçiler</h2>
+    <div class="space-y-4">
+      @if (mode === 'following') {
+        @for (following of followings; track $index) {
+          <div
+            class="flex items-center justify-between gap-4 bg-neutral-900 rounded-md shadow transition-all px-6 py-1"
+          >
+            <div class="flex items-center gap-3">
+              <img
+                [src]="following.profilePhoto || 'null-profil-photo.png'"
+                alt="{{ following.userName }}"
+                class="w-11 h-11 rounded-full object-cover border border-neutral-600 cursor-pointer"
+                (click)="goToUserProfile(following.userName)"
+              />
+              <div>
+                <p class="text-neutral-300 font-semibolds hover:text-indigo-300 cursor-pointer" (click)="goToUserProfile(following.userName)">{{ following.fullName }}</p>
+                <p class="text-neutral-400 text-sm hover:text-indigo-300 cursor-pointer" (click)="goToUserProfile(following.userName)">{{ following.userName }}</p>
+              </div>
+            </div>
+            <app-follow
+              [userName]="following.userName"
+              [isFollower]="following.isFollowing"
+            ></app-follow>
+          </div>
+        }
+      } @else {
+        @for (follower of followers; track $index) {
+          <div
+            class="flex items-center justify-between gap-4 bg-neutral-900 rounded-md shadow transition-all px-6 py-1"
+          >
+            <div class="flex items-center gap-3">
+              <img
+                [src]="follower.profilePhoto || 'null-profil-photo.png'"
+                alt="{{ follower.userName }}"
+                class="w-11 h-11 rounded-full object-cover border border-neutral-600 cursor-pointer"
+                (click)="goToUserProfile(follower.userName)"
+              />
+              <div>
+                <p class="text-neutral-300 font-semibold hover:text-indigo-300 cursor-pointer" (click)="goToUserProfile(follower.userName)">{{ follower.fullName }}</p>
+                <p class="text-neutral-400 text-sm hover:text-indigo-300 cursor-pointer" (click)="goToUserProfile(follower.userName)">{{ follower.userName }}</p>
+              </div>
+            </div>
+            <app-remove-follower
+              [userId]="follower.id"
+              [userName]="follower.userName"
+              [isFollower]="follower.isFollowing"
+              [profileOwner]="userName"
+            ></app-remove-follower>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div>

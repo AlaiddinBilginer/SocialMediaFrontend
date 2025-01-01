@@ -7,11 +7,13 @@ import { ActivatedRoute } from '@angular/router';
 import { IdentityService } from '../../../services/auth/identity.service';
 import { UserPostsComponent } from '../../../components/Users/user-posts/user-posts.component';
 import { UserCommentsComponent } from '../../../components/Users/user-comments/user-comments.component';
+import { UserFollowersComponent } from '../../../components/Users/user-followers/user-followers.component';
+import { FollowComponent } from '../../../components/Buttons/follow/follow.component';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, FormatDatePipe, UserPostsComponent, UserCommentsComponent],
+  imports: [CommonModule, FormatDatePipe, UserPostsComponent, UserCommentsComponent, UserFollowersComponent, FollowComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
@@ -39,32 +41,35 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  follow() {
-    this.userService.follow(this.userName).subscribe((response) => {
-      if(response.succeeded) {
-        this.user.isFollower = true;
-        this.user.followersCount++;
-      }
-    });
+  followEvent() {
+    this.user.isFollower = true;
+    this.user.followersCount++;
   }
 
-  unfollow() {
-    this.userService.unfollow(this.userName).subscribe((response) => {
-      if(response.succeeded) {
-        this.user.isFollower = false;
-        this.user.followersCount--;
-      }
-    })
+  unfollowEvent() {
+    this.user.isFollower = false;
+    this.user.followersCount--;
   }
 
   show(value?: string) {
     switch (value) {
       case 'comments':
-        this.whichShow = 'comments'
+        this.whichShow = 'comments';
         break;
       default:
-        this.whichShow = 'posts'
+        this.whichShow = 'posts';
         break;
     }
+  }
+
+  openFollowersModal = false;
+  openFollowingsModal = false;
+
+  toggleFollowersModal() {
+    this.openFollowersModal = !this.openFollowersModal;
+  }
+
+  toggleFollowingsModal() {
+    this.openFollowingsModal = !this.openFollowingsModal;
   }
 }

@@ -1,82 +1,96 @@
-<div class="bg-neutral-900 text-white min-h-screen max-w-4xl ml-12">
-  <div 
-    class="w-full h-48 bg-cover bg-center relative rounded-xl" 
-    [ngStyle]="{ 'background-image': 'url(' + (user.coverPhoto ?? 'default-cover-photo.jpg') + ')' }">
-    <div class="absolute top-32 left-4 flex items-center gap-4">
-      <img 
-        [src]="user.profilePhoto || 'null-profil-photo.png'"
-        alt="Profile Photo" 
-        class="w-36 h-36 rounded-full border-4 border-gray-800 object-cover" />
-      <div class="mt-12">
-        <h1 class="text-2xl font-bold">{{ user.fullName }}</h1>
-        <p class="text-gray-400">&#64;{{ user.userName }}</p>
+@if (user) {
+  <div class="bg-neutral-900 text-white min-h-screen max-w-4xl ml-12">
+    <div 
+      class="w-full h-48 bg-cover bg-center relative rounded-xl" 
+      [ngStyle]="{ 'background-image': 'url(' + (user.coverPhoto ?? 'default-cover-photo.jpg') + ')' }">
+      <div class="absolute top-32 left-4 flex items-center gap-4">
+        <img 
+          [src]="user.profilePhoto || 'null-profil-photo.png'"
+          alt="Profile Photo" 
+          class="w-36 h-36 rounded-full border-4 border-gray-800 object-cover" />
+        <div class="mt-12">
+          <h1 class="text-2xl font-bold">{{ user.fullName }}</h1>
+          <p class="text-gray-400">{{ user.userName }}</p>
+        </div>
+      </div>
+      <div class="absolute top-48 right-2">
+        <app-follow 
+          [isFollower]="user.isFollower" 
+          [userName]="user.userName"
+          (followEvent)="followEvent()"
+          (unfollowEvent)="unfollowEvent()">
+        </app-follow>
       </div>
     </div>
-  </div>
 
-  @if (identityService.getUserName() !== user.userName) {
-    <div class="flex justify-end mt-2">
-      @if (user.isFollower) {
-        <button 
-          class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-full text-white"
-          (click)="unfollow()"
-        >
-          Takibi Bırak
-        </button>
-      } @else {
-        <button 
-          class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full text-white"
-          (click)="follow()"
-        >
-          Takip Et
-        </button>
+    <div class="px-4 mt-24 mb-1">
+      @if (user.bio) {
+        <p class="text-gray-300">{{ user.bio }}</p>
       }
     </div>
-  } @else {
-    <div class="mt-24"></div>
-  }
 
-  <div class="px-4 mt-12 mb-1">
-    @if (user.bio) {
-      <p class="text-gray-300">{{ user.bio }}</p>
+    <div class="px-4 mb-4">
+      <p class="text-gray-500">
+        Katılma tarihi: 
+        <span class="text-gray-300">{{ user.accountCreatedDate | formatDate }}</span>
+      </p>
+    </div>
+
+    <div class="grid grid-cols-4 text-center bg-neutral-800 mb-8">
+      <div 
+        class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300"
+        (click)="show()"
+      >
+        <p class="text-xl font-bold">{{ user.postsCount }}</p>
+        <p class="text-gray-400">Gönderiler</p>
+      </div>
+      <div 
+        class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300"
+        (click)="show('comments')"
+      >
+        <p class="text-xl font-bold">{{ user.commentsCount }}</p>
+        <p class="text-gray-400">Yorumlar</p>
+      </div>
+      <div 
+        class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300"
+        (click)="toggleFollowersModal()"
+      >
+        <p class="text-xl font-bold">{{ user.followersCount }}</p>
+        <p class="text-gray-400">Takipçiler</p>
+      </div>
+      <div 
+        class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300"
+        (click)="toggleFollowingsModal()"
+      >
+        <p class="text-xl font-bold">{{ user.followingCount }}</p>
+        <p class="text-gray-400">Takip Ediliyor</p>
+      </div>
+    </div>
+
+    @if (whichShow === 'posts') {
+      <app-user-posts [userName]="userName"></app-user-posts>
+    } @else if (whichShow === 'comments') {
+      <app-user-comments [userName]="userName"></app-user-comments>
+    }
+
+    @if (openFollowingsModal) {
+      <app-user-followers 
+        [userName]="userName" 
+        (close)="toggleFollowingsModal()"
+        (followEvent)="followEvent()"
+        (unfollowEvent)="unfollowEvent()"
+        [mode]="'following'">
+      </app-user-followers>
+    }
+
+    @if (openFollowersModal) {
+      <app-user-followers 
+        [userName]="userName" 
+        (close)="toggleFollowersModal()"
+        [mode]="'follower'"
+        (followEvent)="followEvent()"
+        (unfollowEvent)="unfollowEvent()">
+      </app-user-followers>
     }
   </div>
-
-  <div class="px-4 mb-4">
-    <p class="text-gray-500">
-      Katılma tarihi: 
-      <span class="text-gray-300">{{ user.accountCreatedDate | formatDate }}</span>
-    </p>
-  </div>
-
-  <div class="grid grid-cols-4 text-center bg-neutral-800 mb-8">
-    <div 
-      class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300"
-      (click)="show()"
-    >
-      <p class="text-xl font-bold">{{ user.postsCount }}</p>
-      <p class="text-gray-400">Posts</p>
-    </div>
-    <div 
-      class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300"
-      (click)="show('comments')"
-    >
-      <p class="text-xl font-bold">{{ user.commentsCount }}</p>
-      <p class="text-gray-400">Comments</p>
-    </div>
-    <div class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300">
-      <p class="text-xl font-bold">{{ user.followersCount }}</p>
-      <p class="text-gray-400">Followers</p>
-    </div>
-    <div class="hover:bg-neutral-700 p-4 cursor-pointer transition-all duration-300">
-      <p class="text-xl font-bold">{{ user.followingCount }}</p>
-      <p class="text-gray-400">Following</p>
-    </div>
-  </div>
-
-  @if (whichShow === 'posts') {
-    <app-user-posts [userName]="userName"></app-user-posts>
-  } @else if (whichShow === 'comments') {
-    <app-user-comments [userName]="userName"></app-user-comments>
-  }
-</div>
+}

@@ -5,6 +5,8 @@ import { User } from '../../models/user';
 import { Post } from '../../models/post';
 import { ResponseModel } from '../../contracts/common/response-model';
 import { GetCommentsResponse } from '../../contracts/users/get-comments-response';
+import { GetFollowersResponse } from '../../contracts/users/get-followers-response';
+import { GetFollowingResponse } from '../../contracts/users/get-following-response';
 
 @Injectable({
   providedIn: 'root'
@@ -51,5 +53,30 @@ export class UserService {
       action: 'getComments',
       queryString: `userName=${userName}&pagination.page=${page}&pagination.size=${size}`
     });
+  }
+
+  getFollowers(userName: string, page: number = 0, size: number = 10, instantUser: string | null)
+  : Observable<{ followersCount: number, followers: GetFollowersResponse[] }> {
+    return this.httpClientService.get({
+      controller: 'users',
+      action: 'getFollowers',
+      queryString: `userName=${userName}&pagination.page=${page}&pagination.size=${size}&instantUser=${instantUser}`
+    });
+  }
+
+  getFollowing(userName: string, page: number = 0, size: number = 10, instantUser: string | null)
+  : Observable<{ followingCount: number, followings: GetFollowingResponse[] }> {
+    return this.httpClientService.get({
+      controller: 'users',
+      action: 'getFollowing',
+      queryString: `userName=${userName}&pagination.page=${page}&pagination.size=${size}&instantUser=${instantUser}`
+    });
+  }
+
+  deleteFromFollowers(userId: string): Observable<ResponseModel> {
+    return this.httpClientService.delete({
+      controller: 'users',
+      action: 'deleteFromFollowers'
+    }, userId);
   }
 }

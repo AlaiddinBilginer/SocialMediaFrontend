@@ -1,99 +1,101 @@
-<div class="flex items-start space-x-3 mb-3">
-  <a
-    [routerLink]="['/kullanici', comment.userName]">
-    <img 
-      [src]="comment.userProfilePhoto ?? 'null-profil-photo.png'"  
-      [alt]="comment.userName"
-      class="w-8 h-8 rounded-full object-cover"
-    />
-  </a>
-  <div class="relative flex-1">
-    <div class="bg-neutral-900 rounded-lg">
-      <div class="flex items-center">
-        <a 
-          [routerLink]="['/kullanici', comment.userName]"
-          class="font-semibold text-white hover:text-indigo-300 inline text-sm mr-2"
-        >
-          {{ comment.userName }}
-        </a>
-        <div class="text-sm text-gray-400 text-xs">
-          {{ comment.createdDate | timeAgo }}
-        </div>
-      </div>
-      @if (identityService.getUserId() === comment.userId) {
-        <div class="dropdown">
-          <button
-            class="p-2 rounded-full hover:bg-gray-800 absolute right-0"
-            (click)="toggleMenu(comment.id)"
-          >
-            <fa-icon [icon]="faEllipsisV"></fa-icon>
-          </button>
-          @if (comment.id === activeMenuId) {
-            <div class="absolute right-4 mt-10 bg-neutral-800 border border-gray-700 rounded-lg shadow-lg z-10">
-              <button 
-                class="block w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-t-lg"
-                (click)="toggleEdit()">
-                Düzenle
-              </button>
-              <button 
-                class="block w-full px-4 py-2 text-sm text-red-500 hover:bg-gray-700 rounded-b-lg"
-                (click)="deleteComment(comment.id)">
-                Sil
-              </button>
-            </div>
-          }
-        </div>
-      } 
-      @if (editing) {
-        <app-edit-comment 
-          [commentId]="comment.id" 
-          [content]="comment.content"
-          (cancelEdit)="toggleEdit()"
-          (refreshContent)="updateContent($event)">
-        </app-edit-comment>
-      } @else {
-        <div class="text-gray-200 py-2">{{ comment.content }}</div>
-        <div class="flex items-center gap-2 mb-2">
-          <span>
-            <fa-icon 
-              [icon]="faThumbsUp" 
-              class="mr-1 cursor-pointer rounded-full hover:text-green-700">
-            </fa-icon>
-            <span class="text-gray-400 text-sm">150</span>
-          </span>
-          <span>
-            <fa-icon 
-              [icon]="faThumbsDown" 
-              class="mr-1 cursor-pointer rounded-full hover:text-red-700">
-            </fa-icon>
-            <span class="text-gray-400 text-sm">50</span>
-          </span>
-          @if (identityService.isAuthenticated) {
-            <button 
-              class="text-xs font-semibold py-2 px-3 hover:bg-gray-800 rounded-full"
-              (click)="toggleReply()"
-            >
-              Yanıtla
-            </button>
-          }
-        </div>
-      }
-      @if (comment.totalRepliesCount > 0) {
+@if (comment) {
+  <div class="flex items-start space-x-3 mb-3">
+    <a
+      [routerLink]="['/kullanici', comment.userName]">
+      <img 
+        [src]="comment.userProfilePhoto ?? 'null-profil-photo.png'"  
+        [alt]="comment.userName"
+        class="w-8 h-8 rounded-full object-cover"
+      />
+    </a>
+    <div class="relative flex-1">
+      <div class="bg-neutral-900 rounded-lg">
         <div class="flex items-center">
-          <button
-            class="text-blue-500 text-sm p-2 hover:bg-blue-950 rounded-full font-semibold"
-            (click)="toggleReplies()"
+          <a 
+            [routerLink]="['/kullanici', comment.userName]"
+            class="font-semibold text-white hover:text-indigo-300 inline text-sm mr-2"
           >
-            <span>
-              <fa-icon [icon]="faComments" class="mr-1"></fa-icon>
-              {{ comment.totalRepliesCount }} Yanıt
-            </span>
-          </button>        
+            {{ comment.userName }}
+          </a>
+          <div class="text-sm text-gray-400 text-xs">
+            {{ comment.createdDate | timeAgo }}
+          </div>
         </div>
-      }
+        @if (identityService.getUserId() === comment.userId) {
+          <div class="dropdown">
+            <button
+              class="p-2 rounded-full hover:bg-gray-800 absolute right-0"
+              (click)="toggleMenu(comment.id)"
+            >
+              <fa-icon [icon]="faEllipsisV"></fa-icon>
+            </button>
+            @if (comment.id === activeMenuId) {
+              <div class="absolute right-4 mt-10 bg-neutral-800 border border-gray-700 rounded-lg shadow-lg z-10">
+                <button 
+                  class="block w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 rounded-t-lg"
+                  (click)="toggleEdit()">
+                  Düzenle
+                </button>
+                <button 
+                  class="block w-full px-4 py-2 text-sm text-red-500 hover:bg-gray-700 rounded-b-lg"
+                  (click)="deleteComment(comment.id)">
+                  Sil
+                </button>
+              </div>
+            }
+          </div>
+        } 
+        @if (editing) {
+          <app-edit-comment 
+            [commentId]="comment.id" 
+            [content]="comment.content"
+            (cancelEdit)="toggleEdit()"
+            (refreshContent)="updateContent($event)">
+          </app-edit-comment>
+        } @else {
+          <div class="text-gray-200 py-2">{{ comment.content }}</div>
+          <div class="flex items-center gap-2 mb-2">
+            <span>
+              <fa-icon 
+                [icon]="faThumbsUp" 
+                class="mr-1 cursor-pointer rounded-full hover:text-green-700">
+              </fa-icon>
+              <span class="text-gray-400 text-sm">150</span>
+            </span>
+            <span>
+              <fa-icon 
+                [icon]="faThumbsDown" 
+                class="mr-1 cursor-pointer rounded-full hover:text-red-700">
+              </fa-icon>
+              <span class="text-gray-400 text-sm">50</span>
+            </span>
+            @if (identityService.isAuthenticated) {
+              <button 
+                class="text-xs font-semibold py-2 px-3 hover:bg-gray-800 rounded-full"
+                (click)="toggleReply()"
+              >
+                Yanıtla
+              </button>
+            }
+          </div>
+        }
+        @if (comment.totalRepliesCount > 0) {
+          <div class="flex items-center">
+            <button
+              class="text-blue-500 text-sm p-2 hover:bg-blue-950 rounded-full font-semibold"
+              (click)="toggleReplies()"
+            >
+              <span>
+                <fa-icon [icon]="faComments" class="mr-1"></fa-icon>
+                {{ comment.totalRepliesCount }} Yanıt
+              </span>
+            </button>        
+          </div>
+        }
+      </div>
     </div>
   </div>
-</div>
+}
 
 @if (replying) {
   <app-reply-comment 
