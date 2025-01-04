@@ -55,21 +55,29 @@ export class UserService {
     });
   }
 
-  getFollowers(userName: string, page: number = 0, size: number = 10, instantUser: string | null)
+  getFollowers(userName: string, page: number = 0, size: number = 10, instantUser: string, searchTerm?: string)
   : Observable<{ followersCount: number, followers: GetFollowersResponse[] }> {
+    let queryString = `userName=${userName}&pagination.page=${page}&pagination.size=${size}&instantUser=${instantUser}`;
+    if(searchTerm)
+      queryString += `&searchTerm=${searchTerm}`;
+
     return this.httpClientService.get({
       controller: 'users',
       action: 'getFollowers',
-      queryString: `userName=${userName}&pagination.page=${page}&pagination.size=${size}&instantUser=${instantUser}`
+      queryString: queryString
     });
   }
 
-  getFollowing(userName: string, page: number = 0, size: number = 10, instantUser: string | null)
+  getFollowing(userName: string, page: number = 0, size: number = 10, instantUser: string, searchTerm?: string)
   : Observable<{ followingCount: number, followings: GetFollowingResponse[] }> {
+    let queryString = `userName=${userName}&pagination.page=${page}&pagination.size=${size}&instantUser=${instantUser}`;
+    if(searchTerm)
+      queryString += `&searchTerm=${searchTerm}`;
+
     return this.httpClientService.get({
       controller: 'users',
       action: 'getFollowing',
-      queryString: `userName=${userName}&pagination.page=${page}&pagination.size=${size}&instantUser=${instantUser}`
+      queryString: queryString
     });
   }
 

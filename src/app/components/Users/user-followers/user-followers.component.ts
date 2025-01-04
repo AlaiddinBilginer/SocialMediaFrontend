@@ -8,11 +8,14 @@ import { GetFollowingResponse } from '../../../contracts/users/get-following-res
 import { RemoveFollowerComponent } from '../../Buttons/remove-follower/remove-follower.component';
 import { Router, RouterModule } from '@angular/router';
 import { IdentityService } from '../../../services/auth/identity.service';
+import { FormsModule } from '@angular/forms';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { SearchInputComponent } from '../search-input-follower/search-input-follower.component';
 
 @Component({
   selector: 'app-user-followers',
   standalone: true,
-  imports: [FontAwesomeModule, FollowComponent, RemoveFollowerComponent, RouterModule],
+  imports: [FontAwesomeModule, FollowComponent, RemoveFollowerComponent, RouterModule, FormsModule, NgxSpinnerModule, SearchInputComponent],
   templateUrl: './user-followers.component.html',
   styleUrl: './user-followers.component.css'
 })
@@ -23,6 +26,9 @@ export class UserFollowersComponent implements OnInit {
   @Output() followEvent = new EventEmitter<void>();
   @Output() unfollowEvent = new EventEmitter<void>();
   @Input() mode: string = '';
+
+  searchTerm: string = '';
+  isLoading: boolean = false;
 
   followers: GetFollowersResponse[] = [];
   followersCount: number = 0;
@@ -35,7 +41,8 @@ export class UserFollowersComponent implements OnInit {
     private userService: UserService,
     library: FaIconLibrary,
     private router: Router,
-    private identityService: IdentityService
+    private identityService: IdentityService,
+    private spinner: NgxSpinnerService
   ) {
     library.addIcons(faXmark);
   }
@@ -52,18 +59,28 @@ export class UserFollowersComponent implements OnInit {
     this.close.emit();
   }
 
-  getFollowers() {
-    this.userService.getFollowers(this.userName, 0, 20, this.identityService.getUserName()).subscribe(response => {
-      this.followers = response.followers;
-      this.followersCount = response.followersCount;
-    });
+  getFollowers(searchTerm?: string): void {
+    this.isLoading = true;
+    this.spinner.show('searchInputSpinner');
+    this.userService.getFollowers(this.userName, 0, 20, this.identityService.getUserName() ?? this.userName, searchTerm)
+      .subscribe(response => {
+        this.followers = response.followers;
+        this.followersCount = response.followersCount;
+        this.isLoading = false;
+        this.spinner.hide('searchInputSpinner');
+      });
   }
 
-  getFollowings() {
-    this.userService.getFollowing(this.userName, 0, 20, this.identityService.getUserName()).subscribe(response => {
-      this.followings = response.followings;
-      this.followingsCount = response.followingCount;
-    });
+  getFollowings(searchTerm?: string): void {
+    this.isLoading = true;
+    this.spinner.show('searchInputSpinner');
+    this.userService.getFollowing(this.userName, 0, 20, this.identityService.getUserName() ?? this.userName, searchTerm)
+      .subscribe(response => {
+        this.followings = response.followings;
+        this.followingsCount = response.followingCount;
+        this.isLoading = false;
+        this.spinner.hide('searchInputSpinner');
+      });
   }
 
   follow() {
@@ -77,5 +94,13 @@ export class UserFollowersComponent implements OnInit {
   goToUserProfile(userName: string) {
     this.router.navigate(['/kullanici', userName]);
     this.closeModal();
+  }
+
+  onSearch(searchTerm: string) {
+    if (this.mode === 'following') {
+      this.getFollowings(searchTerm);
+    } else {
+      this.getFollowers(searchTerm);
+    }
   }
 }

@@ -9,6 +9,10 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const notificationService: NotificationService = inject(NotificationService);
   const ngxSpinnerService: NgxSpinnerService = inject(NgxSpinnerService);
 
+  if(!HttpStatusCode.Accepted) {
+    ngxSpinnerService.show();
+  }
+
   const errorMessages = new Map<HttpStatusCode, { title: string; message: string }>
   ([
     [
@@ -31,12 +35,12 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
   const defaultError = { title: "Hata", message: "Beklenmeyen bir hata meydana geldi." };
 
-  ngxSpinnerService.show();
 
   return next(req).pipe(
     catchError((error) => {
       const { title, message } = errorMessages.get(error.status) || defaultError;
 
+      ngxSpinnerService.hide();
       notificationService.showNotification(message, title, {
         notificationIconType: NotificationIconType.Error,
         notificationPositionType: NotificationPositionType.Center
@@ -44,6 +48,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
       return of(error);
     }),
-    finalize(() => ngxSpinnerService.hide())
+
   );
 };
