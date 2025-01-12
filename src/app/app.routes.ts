@@ -10,7 +10,7 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'akis', component: HomeComponent },
   { path: 'gonderi-paylas', component: CreatePostComponent, canActivate: [authGuard] },
-  { path: 'gonderiler/kategori/:categoryName', component: ListPostByCategoryComponent },
+  { path: 'gonderiler/kategori/:categoryName', component: ListPostByCategoryComponent, canActivate: [authGuard] },
   { path: 'gonderi/detaylar/:postId', component: PostDetailsComponent },
   { path: 'kullanici/:userName', component: UserProfileComponent, canActivate: [authGuard] }
 ];

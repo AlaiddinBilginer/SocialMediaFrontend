@@ -7,11 +7,12 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 import { CreatePostCommentComponent } from '../../../components/Comments/create-post-comment/create-post-comment.component';
 import { PostCommentsComponent } from '../../../components/Comments/post-comments/post-comments.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-post-details',
   standalone: true,
-  imports: [TimeAgo, RouterModule, FontAwesomeModule, CreatePostCommentComponent, PostCommentsComponent],
+  imports: [TimeAgo, RouterModule, FontAwesomeModule, CreatePostCommentComponent, PostCommentsComponent, CommonModule],
   templateUrl: './post-details.component.html',
   styleUrl: './post-details.component.css'
 })
@@ -43,6 +44,15 @@ export class PostDetailsComponent {
       error: (err) => {
         console.log(err);
       }
+    });
+  }
+
+  like(): void {
+    const currentLikeStatus = this.post.isLiked;
+  
+    this.postService.like(this.post.id).subscribe(() => {
+      this.post.isLiked = !currentLikeStatus;
+      this.post.likeCount += currentLikeStatus ? -1 : 1;
     });
   }
 }

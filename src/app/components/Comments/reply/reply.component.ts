@@ -1,7 +1,7 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { Reply } from '../../../models/reply';
 import { TimeAgo } from '../../../pipes/time-ago.pipe';
-import { faComments, faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons';
+import { faComments, faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReplyCommentComponent } from '../reply-comment/reply-comment.component';
@@ -33,7 +33,6 @@ export class ReplyComponent {
 
   faComments = faComments;
   faThumbsUp = faThumbsUp;
-  faThumbsDown = faThumbsDown;
   faEllipsisV = faEllipsisV;
   
   constructor(
@@ -42,7 +41,7 @@ export class ReplyComponent {
     private notificationService: NotificationService,
     private commentService: CommentService
   ) {
-    library.addIcons(faComments, faThumbsUp, faThumbsDown);
+    library.addIcons(faComments, faThumbsUp);
   }
 
   toggleReply(): void {

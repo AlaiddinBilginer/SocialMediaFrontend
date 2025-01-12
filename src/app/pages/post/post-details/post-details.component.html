@@ -53,18 +53,23 @@
     }
     <p class="text-gray-200 mb-4">{{ post.content }}</p>        
     <div class="flex gap-5 items-center mt-6 text-gray-400">
-      <button 
-      class="flex items-center space-x-1 transition bg-neutral-800 px-2 py-1 rounded-full text-gray-200 hover:text-red-400 hover:bg-neutral-600"
-      (click)="$event.stopPropagation()"
+      <button
+        class="flex items-center space-x-1 transition bg-neutral-700 px-4 py-1 rounded-full"
+        [ngClass]="{
+          'text-red-600 hover:text-gray-200': post.isLiked,
+          'text-gray-200 hover:text-red-600': !post.isLiked
+        }"
+        (click)="$event.stopPropagation()"
+        (click)="like()"
       >
-        <fa-icon [icon]="faHeart" class="text-lg"></fa-icon>
-        <span class="ml-1 text-xs rounded-full px-2 py-0.5 font-bold">
-          30
+        <fa-icon [icon]="faHeart" class="text-lg font-bold"></fa-icon>
+        <span class="ml-1 text-xs rounded-full px-2 font-bold">
+          {{ post.likeCount }}
         </span>
       </button>
 
       <button 
-        class="flex items-center space-x-1 text-gray-200 bg-neutral-800 hover:text-sky-400 transition px-2 py-1 rounded-full hover:bg-neutral-600"
+        class="flex items-center space-x-1 text-gray-200 bg-neutral-800 hover:text-sky-400 transition px-4 py-1 rounded-full hover:bg-neutral-600"
       >
         <fa-icon [icon]="faComment" class="text-lg"></fa-icon>
         <span class="ml-1 text-xs font-bold rounded-full px-2 py-0.5">

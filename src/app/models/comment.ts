@@ -5,6 +5,8 @@ export interface Comment {
   userName: string;
   userProfilePhoto: string | null;
   totalRepliesCount: number;
+  isLiked: boolean;
+  likeCount: number;
   createdDate: Date;
   updatedDate: Date;
 }

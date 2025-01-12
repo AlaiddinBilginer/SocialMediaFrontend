@@ -28,16 +28,9 @@
           <span>
             <fa-icon 
               [icon]="faThumbsUp" 
-              class="mr-1 cursor-pointer rounded-full hover:text-green-700">
+              class="mr-2 cursor-pointer rounded-full hover:text-green-700">
             </fa-icon>
-            <span class="text-gray-400 text-sm">150</span>
-          </span>
-          <span>
-            <fa-icon 
-              [icon]="faThumbsDown" 
-              class="mr-1 cursor-pointer rounded-full hover:text-red-700">
-            </fa-icon>
-            <span class="text-gray-400 text-sm">50</span>
+            <span class="text-gray-400 text-sm">{{ comment.likeCount }}</span>
           </span>
         </div>
       </div>

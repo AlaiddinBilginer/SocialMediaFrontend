@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 import { CommonModule } from '@angular/common';
+import { PostService } from '../../../services/models/post.service';
 
 @Component({
   selector: 'app-list-posts',
@@ -22,7 +23,8 @@ export class ListPostsComponent implements OnInit{
   faComment = faComment;
 
   constructor(
-    library: FaIconLibrary
+    library: FaIconLibrary,
+    private postService: PostService
   ) {
     library.addIcons(faHeart, faComment);
   }
@@ -39,4 +41,17 @@ export class ListPostsComponent implements OnInit{
       this.loadPosts.emit();
     }
   }
+
+  like(postId: string): void {
+    const post = this.posts.find(p => p.id === postId);
+    if (!post) return;
+  
+    const currentLikeStatus = post.isLiked;
+  
+    this.postService.like(postId).subscribe(() => {
+      post.isLiked = !currentLikeStatus;
+      post.likeCount += currentLikeStatus ? -1 : 1;
+    });
+  }
+  
 }

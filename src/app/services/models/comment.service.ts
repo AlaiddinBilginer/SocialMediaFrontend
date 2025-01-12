@@ -6,6 +6,7 @@ import { ResponseModel } from '../../contracts/common/response-model';
 import { Comment } from '../../models/comment';
 import { UpdateCommentRequest } from '../../contracts/comments/update-comment-request';
 import { Reply } from '../../models/reply';
+import { IdentityService } from '../auth/identity.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import { Reply } from '../../models/reply';
 export class CommentService {
 
   constructor(
-    private httpClientService: HttpClientService,
+    private httpClientService: HttpClientService
   ) { }
 
   createComment(createCommentRequest: CreateCommentRequest) : Observable<Reply | Comment> {

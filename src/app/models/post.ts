@@ -9,6 +9,8 @@ export interface Post {
   userId: string;
   userName: string;
   userProfilePhoto: string;
+  isLiked: boolean;
+  likeCount: number;
   createdDate: Date;
   updatedDate: Date;
   postImages: PostImage[];

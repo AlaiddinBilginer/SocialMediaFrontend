@@ -5,6 +5,7 @@ export interface GetCommentsResponse {
   userId: string;
   userName: string;
   userProfilePhoto: string;
+  likeCount: number;
   createdDate: Date;
   updatedDate: Date;
 }

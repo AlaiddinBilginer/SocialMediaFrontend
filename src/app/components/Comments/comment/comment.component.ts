@@ -5,7 +5,7 @@ import { CommentService } from '../../../services/models/comment.service';
 import { TimeAgo } from '../../../pipes/time-ago.pipe';
 import { ReplyComponent } from '../reply/reply.component';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
-import { faComments, faThumbsUp, faThumbsDown, faArrowAltCircleDown } from '@fortawesome/free-regular-svg-icons'
+import { faComments, faThumbsUp, faArrowAltCircleDown } from '@fortawesome/free-regular-svg-icons'
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReplyCommentComponent } from '../reply-comment/reply-comment.component';
 import { IdentityService } from '../../../services/auth/identity.service';
@@ -35,10 +35,8 @@ export class CommentComponent implements OnInit {
   size: number = 6;
   activeMenuId: string | null = null;
   
-
   faComments = faComments;
   faThumbsUp = faThumbsUp;
-  faThumbsDown = faThumbsDown;
   faArrowAltCircleDown = faArrowAltCircleDown;
   faEllipsisV = faEllipsisV;
 
@@ -48,7 +46,7 @@ export class CommentComponent implements OnInit {
     public identityService: IdentityService,
     private notificationService: NotificationService,
   ) {
-    library.addIcons(faComments, faThumbsUp, faThumbsDown, faArrowAltCircleDown, faEllipsisV);
+    library.addIcons(faComments, faThumbsUp, faArrowAltCircleDown, faEllipsisV);
   }
 
   ngOnInit(): void {

@@ -4,6 +4,8 @@ export interface Reply {
   userId: string;
   userName: string;
   userProfilePhoto: string | null;
+  isLiked: boolean;
+  likeCount: number;
   createdDate: Date;
   updatedDate: Date;
 }

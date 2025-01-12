@@ -5,13 +5,15 @@ import { Observable } from 'rxjs';
 import { ResponseModel } from '../../contracts/common/response-model';
 import { Post } from '../../models/post';
 import { PostDetailResponse } from '../../contracts/posts/post-detail-response';
+import { IdentityService } from '../auth/identity.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
   constructor(
-    private httpClientService: HttpClientService
+    private httpClientService: HttpClientService,
+    private identityService: IdentityService
   ) { }
 
   create(createPostRequest: CreatePostRequest): Observable<ResponseModel> {
@@ -57,5 +59,12 @@ export class PostService {
       action: 'getById',
       queryString: `id=${postId}`
     });
+  }
+
+  like(postId: string, userId: string | null = this.identityService.getUserId()): Observable<ResponseModel> {
+    return this.httpClientService.post({
+      controller: 'posts',
+      action: 'likePost'
+    }, { postId, userId });
   }
 }
