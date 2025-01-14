@@ -7,6 +7,7 @@ import { ListCategoryResponse } from '../../../contracts/categories/list-categor
 import { CategoryService } from '../../../services/models/category.service';
 import { Router } from '@angular/router';
 import { PostPhotoUploadComponent } from '../../../components/Posts/post-photo-upload/post-photo-upload.component';
+import { IdentityService } from '../../../services/auth/identity.service';
 
 @Component({
   selector: 'app-create-post',
@@ -26,7 +27,8 @@ export class CreatePostComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
     private categoryService: CategoryService,
-    private router: Router
+    private router: Router,
+    private identityService: IdentityService
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +41,6 @@ export class CreatePostComponent implements OnInit {
   }
 
   onCreate() {
-    console.log(this.files);
     const createPostRequest: CreatePostRequest = {
       ...this.createPostForm.value,
       files: this.files
@@ -50,7 +51,7 @@ export class CreatePostComponent implements OnInit {
           notificationIconType: response.succeeded ? NotificationIconType.Success : NotificationIconType.Error,
           notificationPositionType: NotificationPositionType.Center
         });
-        this.router.navigate(['']);
+        this.router.navigate(['/kullanici/', this.identityService.getUserName()]);
       },
       error: (err) => {
         console.log(err);

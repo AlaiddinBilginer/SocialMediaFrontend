@@ -25,10 +25,16 @@
         </div>
         <div class="text-gray-200 py-2">{{ comment.content }}</div>
         <div class="flex items-center gap-2 mb-2">
-          <span>
+          <span (click)="$event.stopPropagation()">
             <fa-icon 
               [icon]="faThumbsUp" 
-              class="mr-2 cursor-pointer rounded-full hover:text-green-700">
+              class="mr-2 cursor-pointer rounded-full"
+              [ngClass]="{
+                'text-green-700 hover:text-red-700': comment.isLiked,
+                'hover:text-green-700': !comment.isLiked
+              }"
+              (click)="like(comment.commentId)"
+            >
             </fa-icon>
             <span class="text-gray-400 text-sm">{{ comment.likeCount }}</span>
           </span>

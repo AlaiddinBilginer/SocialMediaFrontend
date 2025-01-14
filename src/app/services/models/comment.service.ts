@@ -55,4 +55,11 @@ export class CommentService {
       queryString: `parentCommentId=${parentCommentId}&pagination.page=${page}&pagination.size=${size}`
     });
   }
+
+  like(commentId: string): Observable<ResponseModel> {
+    return this.httpClientService.post({
+      controller: 'comments',
+      action: 'likeComment'
+    }, {commentId});
+  }
 }

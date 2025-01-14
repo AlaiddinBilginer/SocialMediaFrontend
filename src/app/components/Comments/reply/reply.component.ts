@@ -11,11 +11,12 @@ import { NotificationService } from '../../../services/common/notification.servi
 import { CommentService } from '../../../services/models/comment.service';
 import { EditCommentComponent } from '../edit-comment/edit-comment.component';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-reply',
   standalone: true,
-  imports: [TimeAgo, FontAwesomeModule, ReplyCommentComponent, EditCommentComponent, RouterModule],
+  imports: [TimeAgo, FontAwesomeModule, ReplyCommentComponent, EditCommentComponent, RouterModule, CommonModule],
   templateUrl: './reply.component.html',
   styleUrl: './reply.component.css'
 })
@@ -90,5 +91,14 @@ export class ReplyComponent {
 
   updateReplyContent(content: string) {
     this.reply.content = content;
+  }
+
+  like(): void {  
+    const currentLikeStatus = this.reply.isLiked;
+  
+    this.commentService.like(this.reply.id).subscribe(() => {
+      this.reply.isLiked = !currentLikeStatus;
+      this.reply.likeCount += currentLikeStatus ? -1 : 1;
+    });
   }
 }

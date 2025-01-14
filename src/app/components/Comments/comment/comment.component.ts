@@ -12,11 +12,12 @@ import { IdentityService } from '../../../services/auth/identity.service';
 import { NotificationService } from '../../../services/common/notification.service';
 import { EditCommentComponent } from '../edit-comment/edit-comment.component';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-comment',
   standalone: true,
-  imports: [TimeAgo, ReplyComponent, FontAwesomeModule, ReplyCommentComponent, EditCommentComponent, RouterModule],
+  imports: [TimeAgo, ReplyComponent, FontAwesomeModule, ReplyCommentComponent, EditCommentComponent, RouterModule, CommonModule],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css'
 })
@@ -141,5 +142,14 @@ export class CommentComponent implements OnInit {
 
   updateContent(content: string) {
     this.comment.content = content;
+  }
+
+  like(): void {  
+    const currentLikeStatus = this.comment.isLiked;
+  
+    this.commentService.like(this.comment.id).subscribe(() => {
+      this.comment.isLiked = !currentLikeStatus;
+      this.comment.likeCount += currentLikeStatus ? -1 : 1;
+    });
   }
 }
