@@ -57,6 +57,7 @@ export class LoginModalComponent implements OnInit {
           const token: Token = response.token;
           this.localStorageService.set('accessToken', token.accessToken);
           this.identityService.checkIdentity();
+          this.identityService.notifyIdentityChanged();
           this.notificationService.showNotification(response.message + '. Hoş geldin :)', "Giriş Başarılı", {
             notificationIconType: NotificationIconType.Success,
             notificationPositionType: NotificationPositionType.BottomRight

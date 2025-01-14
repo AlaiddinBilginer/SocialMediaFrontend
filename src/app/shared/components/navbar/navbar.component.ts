@@ -44,6 +44,7 @@ export class NavbarComponent {
   signOut() {
     this.localStorageService.delete('accessToken');
     this.identityService.checkIdentity();
+    this.identityService.notifyIdentityChanged();
     this.router.navigate(['/']);
     this.notificationService.showNotification('Hesabınızdan çıkış yapılmıştır. Tekrardan bekleriz :)', "Çıkış Yapıldı", {
       notificationIconType: NotificationIconType.Success,

@@ -57,6 +57,29 @@ export class NotificationService {
       }
     });
   }
+
+  confirmWarning(title: string) {
+    Swal.fire({
+      title: title,
+      customClass: {
+        popup: 'dark-theme-popup'
+      },
+      showClass: {
+        popup: `
+          animate__animated
+          animate__fadeInUp
+          animate__faster
+        `
+      },
+      hideClass: {
+        popup: `
+          animate__animated
+          animate__fadeOutDown
+          animate__faster
+        `
+      }
+    });
+  }
 }
 
 export class NotificationOptions {

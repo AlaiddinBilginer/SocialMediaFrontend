@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from '../common/local-storage.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IdentityService {
   private _isAuthenticated: boolean = false;
+  private identityChangedSubject = new BehaviorSubject<void>(undefined);
+  identityChanged$ = this.identityChangedSubject.asObservable();
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -66,5 +69,9 @@ export class IdentityService {
       return decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || null;
     };
     return null;
+  }
+
+  notifyIdentityChanged(): void {
+    this.identityChangedSubject.next();
   }
 }

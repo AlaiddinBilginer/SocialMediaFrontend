@@ -1,1 +1,5 @@
-<app-list-posts [posts]="posts" [totalPostCount]="totalPostCount"></app-list-posts>
+@if (identityService.isAuthenticated) {
+  <app-list-posts [posts]="posts" [totalPostCount]="totalPostCount"></app-list-posts>
+} @else {
+  <app-list-public-posts [posts]="posts"></app-list-public-posts>
+}

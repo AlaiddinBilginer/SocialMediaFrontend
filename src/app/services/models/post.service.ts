@@ -67,4 +67,12 @@ export class PostService {
       action: 'likePost'
     }, { postId, userId });
   }
+
+  getPublicPosts(limit: number = 10): Observable<{ posts: Post[] }> {
+    return this.httpClientService.get({
+      controller: 'posts',
+      action: 'getPublicPosts',
+      queryString: `limit=${limit}`
+    });
+  }
 }
