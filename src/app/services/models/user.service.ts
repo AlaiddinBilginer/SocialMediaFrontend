@@ -7,6 +7,7 @@ import { ResponseModel } from '../../contracts/common/response-model';
 import { GetCommentsResponse } from '../../contracts/users/get-comments-response';
 import { GetFollowersResponse } from '../../contracts/users/get-followers-response';
 import { GetFollowingResponse } from '../../contracts/users/get-following-response';
+import { SearchUserResponse } from '../../contracts/users/search-user-response';
 
 @Injectable({
   providedIn: 'root'
@@ -86,5 +87,13 @@ export class UserService {
       controller: 'users',
       action: 'deleteFromFollowers'
     }, userId);
+  }
+
+  searchUser(searchTerm: string, page: number = 0, size: number = 10): Observable<{ userCount: number, users: SearchUserResponse[]}> {
+    return this.httpClientService.get({
+      controller: 'users',
+      action: 'searchUser',
+      queryString: `searchTerm=${searchTerm}&pagination.page=${page}&pagination.size=${size}`
+    });
   }
 }

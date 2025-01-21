@@ -11,6 +11,7 @@ export interface Post {
   userProfilePhoto: string;
   isLiked: boolean;
   likeCount: number;
+  commentCount: number;
   createdDate: Date;
   updatedDate: Date;
   postImages: PostImage[];

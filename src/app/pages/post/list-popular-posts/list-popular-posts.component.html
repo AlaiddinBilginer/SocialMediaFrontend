@@ -1,0 +1,13 @@
+@if (identityService.isAuthenticated) {
+  <app-list-posts 
+    [posts]="posts" 
+    [totalPostCount]="totalPostCount"
+    (loadPosts)="getMorePopularPosts()"
+  ></app-list-posts>
+} @else {
+  <app-list-public-posts
+    [posts]="posts"
+    [totalPostCount]="totalPostCount"
+    (loadPosts)="getMorePopularPosts()"
+  ></app-list-public-posts>
+}

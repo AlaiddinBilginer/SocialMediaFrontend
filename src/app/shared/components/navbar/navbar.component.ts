@@ -6,11 +6,13 @@ import { LoginModalComponent } from "../../../components/Auth/login-modal/login-
 import { IdentityService } from '../../../services/auth/identity.service';
 import { LocalStorageService } from '../../../services/common/local-storage.service';
 import { NotificationIconType, NotificationPositionType, NotificationService } from '../../../services/common/notification.service';
+import { SearchUserListComponent } from '../../../components/Users/search-user-list/search-user-list.component';
+import { SearchInputComponent } from "../../../components/Users/search-input-follower/search-input-follower.component";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule, FontAwesomeModule, LoginModalComponent],
+  imports: [RouterModule, FontAwesomeModule, LoginModalComponent, SearchUserListComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })

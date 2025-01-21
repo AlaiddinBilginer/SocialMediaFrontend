@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { Post } from '../../../models/post';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,8 @@ import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
 import { NotificationService } from '../../../services/common/notification.service';
 import { TimeAgo } from '../../../pipes/time-ago.pipe';
 import { LoginModalComponent } from '../../Auth/login-modal/login-modal.component';
+import { IdentityService } from '../../../services/auth/identity.service';
+import { PostService } from '../../../services/models/post.service';
 
 @Component({
   selector: 'app-list-public-posts',
@@ -16,7 +18,9 @@ import { LoginModalComponent } from '../../Auth/login-modal/login-modal.componen
   styleUrl: './list-public-posts.component.css'
 })
 export class ListPublicPostsComponent implements OnInit {
+  @Input() totalPostCount!: number;
   @Input() posts: Post[] = [];
+  @Output() loadPosts = new EventEmitter<void>();
   isLoginModalOpen = false;
   isModalAlreadyOpened = false;
 
@@ -24,7 +28,7 @@ export class ListPublicPostsComponent implements OnInit {
   faComment = faComment;
 
   constructor(
-    private notificationService: NotificationService,
+    private identityService: IdentityService
   ) {}
   
   ngOnInit(): void {
@@ -36,15 +40,24 @@ export class ListPublicPostsComponent implements OnInit {
   }
 
   onScroll(): void {
-    if (this.isModalAlreadyOpened) {
-      return;
-    }
-    const scrollPosition = window.innerHeight + window.scrollY;
-    const documentHeight = document.body.scrollHeight;
+    if(this.identityService.isAuthenticated) {
+      if (this.isModalAlreadyOpened) {
+        return;
+      }
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const documentHeight = document.body.scrollHeight;
 
-    if(scrollPosition >= documentHeight - 100) {
-      this.openModal();
-      this.isModalAlreadyOpened = true;
+      if(scrollPosition >= documentHeight - 100) {
+        this.openModal();
+        this.isModalAlreadyOpened = true;
+      }
+    } else {
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const documentHeight = document.body.scrollHeight;
+  
+      if(scrollPosition >= documentHeight - 100) {
+        this.loadPosts.emit();
+      }
     }
   }
 

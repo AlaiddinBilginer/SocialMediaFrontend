@@ -75,4 +75,18 @@ export class PostService {
       queryString: `limit=${limit}`
     });
   }
+
+  getPopularPosts(page: number, size: number, userId: string | null)
+  : Observable<{ totalPostCount: number, posts: Post[] }> {
+    let queryString: string = `pagination.page=${page}&pagination.size=${size}`;
+
+    if(userId)
+      queryString = queryString + `&currentUserId=${userId}`;
+
+    return this.httpClientService.get({
+      controller: 'posts',
+      action: 'getPopularPosts',
+      queryString: queryString
+    });
+  }
 }

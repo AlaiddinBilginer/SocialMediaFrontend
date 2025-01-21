@@ -54,7 +54,7 @@
     <p class="text-gray-200 mb-4">{{ post.content }}</p>        
     <div class="flex gap-5 items-center mt-6 text-gray-400">
       <button
-        class="flex items-center space-x-1 transition bg-neutral-700 px-4 py-1 rounded-full"
+        class="flex items-center space-x-1 transition bg-neutral-800 px-4 py-1 rounded-full"
         [ngClass]="{
           'text-red-600 hover:text-gray-200': post.isLiked,
           'text-gray-200 hover:text-red-600': !post.isLiked
@@ -73,7 +73,7 @@
       >
         <fa-icon [icon]="faComment" class="text-lg"></fa-icon>
         <span class="ml-1 text-xs font-bold rounded-full px-2 py-0.5">
-          25
+          {{ post.commentCount }}
         </span>
       </button>
     </div>

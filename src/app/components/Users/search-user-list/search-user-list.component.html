@@ -1,0 +1,37 @@
+<div (click)="closeModal()">
+  <div
+    class="bg-neutral-900 rounded-lg max-w-md w-full shadow-lg transform transition-all duration-300 relative"
+    (click)="$event.stopPropagation()"
+  >
+      <app-search-input
+        class="block w-full px-4"
+        [isLoading]="isLoading"
+        (onSearch)="onSearch($event)"
+        [mode]="'searchUsers'"
+      ></app-search-input>
+      @if (users.length > 0) {
+        <div class="absolute left-5 top-14 bg-neutral-900 rounded-lg shadow-lg w-96 z-50 overflow-y-auto max-h-96">
+          @for (user of users; track $index) {
+            <div
+              class="flex items-center justify-between gap-4 bg-neutral-800 rounded-md shadow transition-all px-6 py-2 hover:bg-neutral-700 cursor-pointer"
+              (click)="goToUserProfile(user.userName)"
+            >
+              <div class="flex items-center gap-3">
+                <img
+                  [src]="user.profilePhoto || 'null-profil-photo.png'"
+                  alt="{{ user.userName }}"
+                  class="w-11 h-11 rounded-full object-cover border border-neutral-600 cursor-pointer"
+                  (click)="goToUserProfile(user.userName)"
+                />
+                <div>
+                  <p class="text-neutral-300 font-semibolds hover:text-indigo-300 cursor-pointer" (click)="goToUserProfile(user.userName)">{{ user.fullName }}</p>
+                  <p class="text-neutral-400 text-sm hover:text-indigo-300 cursor-pointer" (click)="goToUserProfile(user.userName)">{{ user.userName }}</p>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+  </div>
+</div>
+
